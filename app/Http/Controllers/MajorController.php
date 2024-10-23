@@ -11,6 +11,7 @@ class MajorController extends Controller
     public function index()
     {
         $majors = Major::all();
+
         return MajorResource::collection($majors);
     }
 

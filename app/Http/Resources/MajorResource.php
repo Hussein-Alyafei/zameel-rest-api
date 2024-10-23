@@ -21,15 +21,15 @@ class MajorResource extends JsonResource
                     'data' => [
                         'type' => 'college',
                         'id' => $this->college_id,
-                    ]
+                    ],
                 ],
                 'degree' => [
                     'data' => [
                         'type' => 'degree',
                         'id' => $this->degree_id,
-                    ]
-                ]
-            ]
+                    ],
+                ],
+            ],
         ];
     }
 }

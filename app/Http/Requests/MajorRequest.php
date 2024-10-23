@@ -17,10 +17,10 @@ class MajorRequest extends BaseRequest
         $requiredOrSometimes = ($this->isMethod('patch') ? 'sometimes|' : 'required|');
 
         return [
-            'data.attributes.name' => $requiredOrMissing . 'string|regex:/^[\\p{L}\\p{M}\\s]+$/u|max:45|unique:majors,name',
-            'data.attributes.years' => $requiredOrSometimes . 'integer|between:1,8',
-            'data.relationships.college.data.id' => $requiredOrSometimes . 'integer|numeric|exists:colleges,id',
-            'data.relationships.degree.data.id' => $requiredOrMissing . 'integer|numeric|exists:degrees,id',
+            'data.attributes.name' => $requiredOrMissing.'string|regex:/^[\\p{L}\\p{M}\\s]+$/u|max:45|unique:majors,name',
+            'data.attributes.years' => $requiredOrSometimes.'integer|between:1,8',
+            'data.relationships.college.data.id' => $requiredOrSometimes.'integer|numeric|exists:colleges,id',
+            'data.relationships.degree.data.id' => $requiredOrMissing.'integer|numeric|exists:degrees,id',
         ];
     }
 }
