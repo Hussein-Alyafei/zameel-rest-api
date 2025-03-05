@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('major_subject', function (Blueprint $table) {
-            $table->foreignId('major_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('subject_id')->constrained()->cascadeOnDelete();
+        Schema::create('summaries', function (Blueprint $table) {
+            $table->id();
+            $table->json('content');
+            $table->foreignId('book_id')->constrained()->cascadeOnDelete();
+            $table->timestamps();
         });
     }
 
@@ -22,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('major_subject');
+        Schema::dropIfExists('summaries');
     }
 };

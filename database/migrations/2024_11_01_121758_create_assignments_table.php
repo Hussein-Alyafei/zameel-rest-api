@@ -11,11 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('subjects', function (Blueprint $table) {
+        Schema::create('assignments', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 45);
+            $table->string('title');
+            $table->text('description')->nullable();
+            $table->dateTime('due_date');
+            $table->foreignId('subject_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('group_id')->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -24,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('subjects');
+        Schema::dropIfExists('assignments');
     }
 };

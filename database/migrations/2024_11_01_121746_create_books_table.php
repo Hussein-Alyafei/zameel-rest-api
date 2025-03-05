@@ -11,14 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('majors', function (Blueprint $table) {
+        Schema::create('books', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('college_id')->constrained()->restrictOnDelete();
-            $table->foreignId('degree_id')->constrained()->cascadeOnDelete();
-            $table->unsignedTinyInteger('years');
+            $table->text('path');
+            $table->foreignId('subject_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('group_id')->nullable()->constrained()->nullOnDelete();
+            $table->boolean('is_practical');
+            $table->tinyInteger('year');
+            $table->tinyInteger('semester');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('majors');
+        Schema::dropIfExists('books');
     }
 };

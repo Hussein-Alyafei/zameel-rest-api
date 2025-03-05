@@ -11,9 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('subject_user', function (Blueprint $table) {
-            $table->foreignId('subject_id')->constrained()->cascadeOnDelete();
+        Schema::create('assignment_user', function (Blueprint $table) {
+            $table->string('type', 4);
+            $table->text('content');
+            $table->foreignId('assignment_id')->constrained()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->timestamps();
+            $table->primary(['assignment_id', 'user_id']);
         });
     }
 
@@ -22,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('subject_user');
+        Schema::dropIfExists('deliveries');
     }
 };

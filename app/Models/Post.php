@@ -14,17 +14,10 @@ class Post extends Model
 
     protected $fillable = [
         'publisher_id',
+        'subject_id',
         'taggable_id',
         'taggable_type',
         'content',
-        'has_attachment',
-    ];
-
-    protected $casts = [
-        'id' => 'integer',
-        'publisher_id' => 'integer',
-        'taggable_id' => 'integer',
-        'has_attachment' => 'boolean',
     ];
 
     public function files(): HasMany
@@ -39,6 +32,6 @@ class Post extends Model
 
     public function publisher(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'publisher_id');
+        return $this->belongsTo(User::class);
     }
 }

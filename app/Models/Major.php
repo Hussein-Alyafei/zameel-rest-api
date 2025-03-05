@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Major extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -19,18 +19,6 @@ class Major extends Model
         'degree_id',
         'years',
     ];
-
-    protected $casts = [
-        'id' => 'integer',
-        'college_id' => 'integer',
-        'degree_id' => 'integer',
-        'years' => 'integer',
-    ];
-
-    public function subjects(): BelongsToMany
-    {
-        return $this->belongsToMany(Subject::class);
-    }
 
     public function groups(): HasMany
     {

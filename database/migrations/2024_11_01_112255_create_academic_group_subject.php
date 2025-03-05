@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('group_user_members', function (Blueprint $table) {
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+        // make model for this
+        Schema::create('academic_group_subject', function (Blueprint $table) {
+            $table->foreignId('academic_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('group_id')->constrained()->cascadeOnDelete();
-            $table->boolean('is_representer');
-            $table->timestamps();
-            $table->primary(['user_id', 'group_id']);
+            $table->foreignId('subject_id')->constrained()->cascadeOnDelete();
+            $table->primary(['academic_id', 'group_id', 'subject_id']);
         });
     }
 
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('group_user_members');
+        Schema::dropIfExists('academic_group_subject');
     }
 };
