@@ -20,9 +20,9 @@ To set up the project locally, follow these steps:
 
 3. **Set Up Environment**
    - Copy the `.env.example` file and rename it to `.env`:
-     ```sh
-     cp .env.example .env
-     ```
+   ```sh
+   cp .env.example .env
+   ```
    - Update the `.env` file with your database credentials.
 
 4. **Generate Application Key**
