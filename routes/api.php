@@ -14,8 +14,8 @@ Route::post('/logout', [AuthenticationController::class, 'logout'])->middleware(
 
 Route::middleware('auth:sanctum')->group(function () {
     Orion::resource('colleges', CollegeController::class)->withSoftDeletes();
-    Orion::hasManyResource('colleges', 'majors', CollegeMajorController::class);
+    Orion::hasManyResource('colleges', 'majors', CollegeMajorController::class)->withSoftDeletes();
 
-    Orion::resource('majors', MajorController::class);
+    Orion::resource('majors', MajorController::class)->withSoftDeletes();
     Orion::belongsToResource('majors', 'college', MajorCollegeController::class)->withSoftDeletes();
 });
