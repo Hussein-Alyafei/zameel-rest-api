@@ -25,7 +25,7 @@ class PostFactory extends Factory
         }
 
         return [
-            'publisher_id' => User::whereIn('role_id', [1, 2, 3, 4])->inRandomOrder()->first()->id,
+            'user_id' => User::whereIn('role_id', [1, 2, 3, 4])->inRandomOrder()->first()->id,
             'subject_id' => $taggableType === Group::class ? Subject::inRandomOrder()->first() : null,
             'taggable_id' => $taggableId,
             'taggable_type' => $taggableType,

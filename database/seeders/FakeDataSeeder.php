@@ -2,10 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Apply;
 use App\Models\File;
 use App\Models\Group;
-use App\Models\Member;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -23,11 +21,27 @@ class FakeDataSeeder extends BaseSeeder
 
         User::factory(100)->create();
 
-        Group::factory(20)->create();
+        $groups = Group::factory(20)->create();
 
-        Member::factory(50)->create();
+        $groups->each(function ($group) {
+            $usersIDs = User::inRandomOrder()->take(5)->get()->pluck('id')->toArray();
+            $users = [];
+            foreach ($usersIDs as $userID) {
+                $users[$userID] = ['is_representer' => fake()->boolean()];
+            }
 
-        Apply::factory(50)->create();
+            $group->members()->attach($users);
+        });
+
+        $groups->each(function ($group) {
+            $usersIDs = User::inRandomOrder()->take(5)->get()->pluck('id')->toArray();
+            $users = [];
+            foreach ($usersIDs as $userID) {
+                $users[$userID] = ['status_id' => fake()->numberBetween(1, 3), 'note' => 'Note'];
+            }
+
+            $group->applies()->attach($users);
+        });
 
         Post::factory(50)->create();
 
