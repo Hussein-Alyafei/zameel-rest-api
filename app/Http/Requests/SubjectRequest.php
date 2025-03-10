@@ -6,7 +6,6 @@ use Orion\Http\Requests\Request;
 
 class SubjectRequest extends Request
 {
-
     public function updateRules(): array
     {
         return [
