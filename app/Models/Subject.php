@@ -38,7 +38,7 @@ class Subject extends Model
         $data = $request->validate(['force' => 'sometimes|boolean']);
         $isForceDelete = ($data['force'] ?? 'false') === 'true';
         $isHasAssignments = $subject->assignments()->exists();
-        $isHasBooks =  $subject->books()->exists();
+        $isHasBooks = $subject->books()->exists();
         if ($isForceDelete && ($isHasAssignments || $isHasBooks)) {
             throw new UnprocessableEntityHttpException('Cannot delete subject with related assignments or books');
         }
