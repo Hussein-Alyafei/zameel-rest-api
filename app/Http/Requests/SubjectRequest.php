@@ -10,14 +10,14 @@ class SubjectRequest extends Request
     public function updateRules(): array
     {
         return [
-            'name' => 'sometimes|string|max:45|regex:/^[\p{L}\p{M}\s0-9]+$/u|unique:subjects,name',
+            'name' => 'sometimes|string|max:75|unique:subjects,name',
         ];
     }
 
     public function storeRules(): array
     {
         return [
-            'name' => 'required|string|max:45|regex:/^[\p{L}\p{M}\s0-9]+$/u|unique:subjects,name',
+            'name' => 'required|string|max:75|unique:subjects,name',
         ];
     }
 }
