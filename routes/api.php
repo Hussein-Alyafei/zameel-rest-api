@@ -1,6 +1,10 @@
 <?php
 
-use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\Auth\AuthenticationController;
+use App\Http\Controllers\Auth\EmailVerificationNotificationController;
+use App\Http\Controllers\Auth\NewPasswordController;
+use App\Http\Controllers\Auth\PasswordResetLinkController;
+use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\CollegeController;
 use App\Http\Controllers\CollegeMajorsController;
 use App\Http\Controllers\GroupController;
@@ -28,4 +32,18 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Orion::resource('groups', GroupController::class)->except(GroupController::EXCLUDE_METHODS);
     Orion::belongsToResource('groups', 'major', GroupMajorController::class)->withSoftDeletes();
+
+    Route::post('verify-email', VerifyEmailController::class)
+        ->middleware(['throttle:6,1'])
+        ->name('verification.verify');
+
+    Route::post('email/verification-notification', EmailVerificationNotificationController::class)
+        ->middleware('throttle:6,1')
+        ->name('verification.send');
 });
+
+Route::post('forgot-password', PasswordResetLinkController::class)
+    ->name('password.email');
+
+Route::post('reset-password', NewPasswordController::class)
+    ->name('password.store');
