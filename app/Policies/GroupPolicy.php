@@ -30,6 +30,6 @@ class GroupPolicy
      */
     public function create(User $user): bool
     {
-        return Gate::forUser($user)->check('administrate');
+        return Gate::forUser($user)->check('admin');
     }
 }

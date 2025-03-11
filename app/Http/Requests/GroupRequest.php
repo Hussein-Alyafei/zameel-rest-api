@@ -10,7 +10,7 @@ class GroupRequest extends Request
     {
         return [
             'join_year' => 'required|digits:4|integer|min:2015|max:'.date('Y'),
-            'division' => 'required|string|size:1|regex:/^[A-C]$/',
+            'division' => 'required|string|size:1|regex:/^[A-Z]$/',
             'major_id' => 'required|integer|exists:majors,id',
         ];
     }
