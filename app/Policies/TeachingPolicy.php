@@ -19,7 +19,7 @@ class TeachingPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Teaching $teaching):  bool
+    public function view(User $user, Teaching $teaching): bool
     {
         return Gate::forUser($user)->any(['admin', 'manager']);
     }
