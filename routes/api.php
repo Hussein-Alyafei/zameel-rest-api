@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\BookController;
 use App\Http\Controllers\CollegeController;
 use App\Http\Controllers\CollegeMajorsController;
 use App\Http\Controllers\GroupController;
@@ -42,6 +43,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Orion::resource('teaching', TeachingController::class)->except(TeachingController::EXCLUDE_METHODS)->withoutBatch();
 
+    Orion::resource('books', BookController::class);
+    
     Route::post('verify-email', VerifyEmailController::class)
         ->middleware(['throttle:6,1'])
         ->name('verification.verify');
