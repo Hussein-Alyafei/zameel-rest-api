@@ -12,7 +12,6 @@ class ApplyController extends Controller
 {
     use DisablePagination;
 
-
     protected $model = Apply::class;
 
     protected $policy = ApplyPolicy::class;
