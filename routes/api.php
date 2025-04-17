@@ -44,7 +44,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Orion::resource('teaching', TeachingController::class)->except(TeachingController::EXCLUDE_METHODS)->withoutBatch();
 
     Orion::resource('books', BookController::class);
-    
+
     Route::post('verify-email', VerifyEmailController::class)
         ->middleware(['throttle:6,1'])
         ->name('verification.verify');
