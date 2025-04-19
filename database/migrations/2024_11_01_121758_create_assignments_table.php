@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('description')->nullable();
             $table->dateTime('due_date');
-            $table->foreignId('subject_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('subject_id')->constrained();
             $table->foreignId('group_id')->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
         });
