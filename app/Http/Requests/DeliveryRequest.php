@@ -2,13 +2,14 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Validation\Rules\File;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\File;
 use Orion\Http\Requests\Request;
 
 class DeliveryRequest extends Request
 {
     private $deliverytypes = ['url', 'text', 'file'];
+
     private $fileTypes = ['pdf', 'zip', 'rar', 'docx', 'pptx', 'ppt', 'psd', 'mpp', 'ai', 'm', 'mat', 'ino', 'h'];
 
     public function storeRules(): array
