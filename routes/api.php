@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApplyController;
+use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\Auth\AuthenticationController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\NewPasswordController;
@@ -47,6 +48,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Orion::resource('books', BookController::class);
 
     Orion::resource('deliveries', DeliveryController::class)->except(DeliveryController::EXCLUDE_METHODS)->withoutBatch();
+
+    Orion::resource('assignments', AssignmentController::class);
 
     Route::post('verify-email', VerifyEmailController::class)
         ->middleware(['throttle:6,1'])
