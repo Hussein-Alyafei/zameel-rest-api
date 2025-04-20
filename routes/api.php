@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CollegeController;
 use App\Http\Controllers\CollegeMajorsController;
+use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\GroupMajorController;
 use App\Http\Controllers\MajorCollegeController;
@@ -44,6 +45,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Orion::resource('teaching', TeachingController::class)->except(TeachingController::EXCLUDE_METHODS)->withoutBatch();
 
     Orion::resource('books', BookController::class);
+
+    Orion::resource('deliveries', DeliveryController::class)->except(DeliveryController::EXCLUDE_METHODS)->withoutBatch();
 
     Route::post('verify-email', VerifyEmailController::class)
         ->middleware(['throttle:6,1'])
