@@ -36,7 +36,7 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function scopeTaggable($query)
+    public function scopeStudent($query)
     {
         $groups = Auth::user()->groups();
         $groupsIDs = $groups->pluck('id')->toArray();
@@ -53,5 +53,39 @@ class Post extends Model
             $query->where('taggable_type', 'App\\Models\\Group')
                 ->whereIn('taggable_id', $groupsIDs);
         })->orWhereNull('taggable_type');
+    }
+
+    public function scopeAcademic($query)
+    {
+        $groups = Auth::user()->teachingGroups()->get();
+        $majors = $groups->pluck('major_id')->toArray();
+        $colleges = Major::whereIn('id', $majors)->pluck('college_id')->toArray();
+
+        $query->where(function ($query) use ($colleges, $majors, $groups) {
+            $query->where(function ($query) use ($colleges) {
+                $query->where('taggable_type', 'App\\Models\\College')
+                    ->whereIn('taggable_id', $colleges);
+            });
+
+            $query->orWhere(function ($query) use ($majors) {
+                $query->where('taggable_type', 'App\\Models\\Major')
+                    ->whereIn('taggable_id', $majors);
+            });
+
+            foreach ($groups as $group) {
+                $query->orWhere(function ($query) use ($group) {
+                    $query->where('taggable_type', 'App\\Models\\Group')
+                        ->where('taggable_id', $group->id)
+                        ->where('subject_id', $group->pivot->subject_id);
+                });
+            }
+
+            $query->orWhereNull('taggable_type');
+        });
+    }
+
+    public function scopeAdmin($query)
+    {
+        $query->whereIn('taggable_type', ['App\\Models\\College', 'App\\Models\\Major'])->orWhereNull('taggable_type');
     }
 }

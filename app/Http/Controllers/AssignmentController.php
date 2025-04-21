@@ -14,4 +14,9 @@ class AssignmentController extends Controller
     protected $policy = AssignmentPolicy::class;
 
     protected $request = AssignmentRequest::class;
+
+    public function filterableBy(): array
+    {
+        return ['due_date', 'subject_id', 'group_id', 'created_at'];
+    }
 }

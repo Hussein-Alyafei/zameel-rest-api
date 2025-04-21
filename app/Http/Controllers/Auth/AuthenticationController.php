@@ -34,8 +34,8 @@ class AuthenticationController extends Controller
 
     public function register(RegisterRequest $request)
     {
-        $data = $request->formattedData();
-        User::create($data['model']);
+        $data = $request->validated();
+        User::create($data);
 
         return response()->json(['message' => 'created'], 200);
     }

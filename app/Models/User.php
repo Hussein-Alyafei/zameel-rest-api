@@ -82,12 +82,12 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function teachingGroups(): BelongsToMany
     {
-        return $this->belongsToMany(Group::class, 'group_subject_user');
+        return $this->belongsToMany(Group::class, 'group_subject_user')->withPivot('subject_id');
     }
 
     public function teachingSubjects(): BelongsToMany
     {
-        return $this->belongsToMany(Subject::class, 'group_subject_user');
+        return $this->belongsToMany(Subject::class, 'group_subject_user')->withPivot('group_id');
     }
 
     public function colleges(): BelongsToMany

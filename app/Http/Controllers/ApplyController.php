@@ -5,13 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ApplyRequest;
 use App\Models\Apply;
 use App\Policies\ApplyPolicy;
-use Orion\Concerns\DisablePagination;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Orion\Http\Controllers\Controller;
 
 class ApplyController extends Controller
 {
-    use DisablePagination;
-
     protected $model = Apply::class;
 
     protected $policy = ApplyPolicy::class;
@@ -21,6 +21,11 @@ class ApplyController extends Controller
     protected $pivotFillable = ['note'];
 
     public const EXCLUDE_METHODS = ['update'];
+
+    protected function performFill(Request $request, Model $entity, array $attributes): void
+    {
+        $entity->fill([...$attributes, 'user_id' => Auth::user()->id]);
+    }
 
     public function filterableBy(): array
     {

@@ -23,4 +23,9 @@ class MajorController extends Controller
     {
         $major->beforeDestroy($request, $major);
     }
+
+    public function filterableBy(): array
+    {
+        return ['college_id', 'created_at'];
+    }
 }

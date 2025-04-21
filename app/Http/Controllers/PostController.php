@@ -30,12 +30,16 @@ class PostController extends Controller
 
     public function exposedScopes(): array
     {
-        return ['taggable'];
+        return [
+            'student',
+            'academic',
+            'admin',
+        ];
     }
 
     public function filterableBy(): array
     {
-        return ['created_at'];
+        return ['created_at', 'subject_id', 'user_id'];
     }
 
     protected function performFill(Request $request, Model $entity, array $attributes): void

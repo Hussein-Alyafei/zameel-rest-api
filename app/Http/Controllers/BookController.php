@@ -26,6 +26,7 @@ class BookController extends Controller
             'is_practical',
             'year',
             'semester',
+            'created_at',
         ];
     }
 

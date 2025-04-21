@@ -37,7 +37,7 @@ class AssignmentPolicy
      */
     public function update(User $user, Assignment $assignment): bool
     {
-        return $user->id === $assignment->user_id;
+        return Gate::forUser($user)->any(['admin', 'representer', 'academic', 'manager']);
     }
 
     /**

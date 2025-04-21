@@ -136,9 +136,9 @@ it("can't force delete college that have majors", function () {
     deleteJson('/api/colleges/1?force=true', [], ['Authorization' => 'Bearer '.$this::$adminToken])
         ->assertUnprocessable();
 
-    $major = $college->majors()->first();
-    deleteJson('/api/majors/'.$major->id.'/college?force=true', [], ['Authorization' => 'Bearer '.$this::$adminToken])
-        ->assertUnprocessable();
+    // $major = $college->majors()->first();
+    // deleteJson('/api/majors/'.$major->id.'/college?force=true', [], ['Authorization' => 'Bearer '.$this::$adminToken])
+    //     ->assertUnprocessable();
 });
 
 it('can soft delete college that have majors', function () {
@@ -147,9 +147,9 @@ it('can soft delete college that have majors', function () {
     deleteJson('/api/colleges/'.$college->id, [], ['Authorization' => 'Bearer '.$this::$adminToken])
         ->assertOK();
 
-    $college = $this->model::create(call_user_func($this->validSample));
-    Major::factory()->create(['college_id' => $college->id]);
-    $major = $college->majors()->first();
-    deleteJson('/api/majors/'.$major->id.'/college', [], ['Authorization' => 'Bearer '.$this::$adminToken])
-        ->assertOK();
+    // $college = $this->model::create(call_user_func($this->validSample));
+    // Major::factory()->create(['college_id' => $college->id]);
+    // $major = $college->majors()->first();
+    // deleteJson('/api/majors/'.$major->id.'/college', [], ['Authorization' => 'Bearer '.$this::$adminToken])
+    //     ->assertOK();
 });

@@ -9,14 +9,11 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CollegeController;
-use App\Http\Controllers\CollegeMajorsController;
 use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\GroupController;
-use App\Http\Controllers\GroupMajorController;
-use App\Http\Controllers\MajorCollegeController;
 use App\Http\Controllers\MajorController;
-use App\Http\Controllers\MajorGroupsController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TeachingController;
 use Illuminate\Support\Facades\Route;
@@ -27,29 +24,28 @@ Route::post('/register', [AuthenticationController::class, 'register']);
 Route::post('/logout', [AuthenticationController::class, 'logout'])->middleware('auth:sanctum');
 
 Route::middleware('auth:sanctum')->group(function () {
+
+    Route::post('/user/{user}/role/{role}', PromotionController::class);
+
     Orion::resource('posts', PostController::class)->except(PostController::EXCLUDE_METHODS)->withoutBatch();
 
-    Orion::resource('colleges', CollegeController::class)->withSoftDeletes();
-    Orion::hasManyResource('colleges', 'majors', CollegeMajorsController::class)->withSoftDeletes();
+    Orion::resource('colleges', CollegeController::class)->withSoftDeletes()->withoutBatch();
 
-    Orion::resource('majors', MajorController::class)->withSoftDeletes();
-    Orion::belongsToResource('majors', 'college', MajorCollegeController::class)->withSoftDeletes();
-    Orion::hasManyResource('majors', 'groups', MajorGroupsController::class)->except(GroupController::EXCLUDE_METHODS);
+    Orion::resource('majors', MajorController::class)->withSoftDeletes()->withoutBatch();
 
-    Orion::resource('subjects', SubjectController::class)->withSoftDeletes();
+    Orion::resource('subjects', SubjectController::class)->withSoftDeletes()->withoutBatch();
 
     Orion::resource('groups', GroupController::class)->except(GroupController::EXCLUDE_METHODS);
-    Orion::belongsToResource('groups', 'major', GroupMajorController::class)->withSoftDeletes();
 
     Orion::resource('applies', ApplyController::class)->except(ApplyController::EXCLUDE_METHODS)->withoutBatch();
 
-    Orion::resource('teaching', TeachingController::class)->except(TeachingController::EXCLUDE_METHODS)->withoutBatch();
+    Orion::resource('teaching', TeachingController::class)->except(TeachingController::EXCLUDE_METHODS);
 
-    Orion::resource('books', BookController::class);
+    Orion::resource('books', BookController::class)->withoutBatch();
+
+    Orion::resource('assignments', AssignmentController::class)->withoutBatch();
 
     Orion::resource('deliveries', DeliveryController::class)->except(DeliveryController::EXCLUDE_METHODS)->withoutBatch();
-
-    Orion::resource('assignments', AssignmentController::class);
 
     Route::post('verify-email', VerifyEmailController::class)
         ->middleware(['throttle:6,1'])

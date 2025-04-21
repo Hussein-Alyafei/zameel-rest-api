@@ -16,16 +16,13 @@ class DeliveryRequest extends Request
     {
         return [
             'type' => ['required', Rule::in($this->deliverytypes)],
-            'content' => $this->getContentRule(),
+            'content' => $this->getContentRules($this->input('type')),
             'assignment_id' => 'required|integer|exists:assignments,id',
-            'student_id' => 'required|integer|exists:users,id',
         ];
     }
 
-    private function getContentRule(): array
+    private function getContentRules($type): array
     {
-        $type = $this->input('type');
-
         return match ($type) {
             'url' => ['required', 'url'],
             'text' => ['required', 'string'],

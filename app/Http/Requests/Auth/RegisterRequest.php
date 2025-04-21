@@ -2,17 +2,11 @@
 
 namespace App\Http\Requests\Auth;
 
-use App\Http\Requests\BaseRequest;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
 
-class RegisterRequest extends BaseRequest
+class RegisterRequest extends FormRequest
 {
-    protected $map = [
-        'data.attributes.name' => 'model.name',
-        'data.attributes.email' => 'model.email',
-        'data.attributes.password' => 'model.password',
-    ];
-
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -29,9 +23,9 @@ class RegisterRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            'data.attributes.name' => 'required|string|regex:/^[\p{L}\p{M}\s]+$/u|max:255',
-            'data.attributes.email' => 'required|string|max:255|email',
-            'data.attributes.password' => ['required', 'confirmed', Password::defaults()],
+            'name' => 'required|string|regex:/^[\p{L}\p{M}\s]+$/u|max:255',
+            'email' => 'required|string|max:255|email',
+            'password' => ['required', 'confirmed', Password::defaults()],
         ];
     }
 }
