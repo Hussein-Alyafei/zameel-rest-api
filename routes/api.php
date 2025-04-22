@@ -16,6 +16,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TeachingController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Orion\Facades\Orion;
 
@@ -25,7 +26,9 @@ Route::post('/logout', [AuthenticationController::class, 'logout'])->middleware(
 
 Route::middleware('auth:sanctum')->group(function () {
 
-    Route::post('/user/{user}/role/{role}', PromotionController::class);
+    Route::post('/users/{user}/roles/{role}', PromotionController::class);
+
+    Orion::resource('users', UserController::class)->except(UserController::EXCLUDE_METHODS)->withoutBatch();
 
     Orion::resource('posts', PostController::class)->except(PostController::EXCLUDE_METHODS)->withoutBatch();
 
