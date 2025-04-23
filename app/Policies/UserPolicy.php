@@ -2,7 +2,6 @@
 
 namespace App\Policies;
 
-use App\Models\Major;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
@@ -24,7 +23,4 @@ class UserPolicy
     {
         return Gate::forUser($user)->any(['admin', 'manager']);
     }
-
-
-
 }

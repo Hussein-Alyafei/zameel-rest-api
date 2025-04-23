@@ -2,18 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Exceptions\SendEmailException;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Exception;
-use Http\Client\Common\Exception\ServerErrorException;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\Rules;
 use Inertia\Response;
-use Symfony\Component\CssSelector\Exception\InternalErrorException;
 
 class NewPasswordController extends Controller
 {
