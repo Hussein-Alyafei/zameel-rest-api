@@ -21,7 +21,7 @@ class PostController extends Controller
 
     protected $request = PostRequest::class;
 
-    public const EXCLUDE_METHODS = ['index', 'update'];
+    public const EXCLUDE_METHODS = ['index', 'update', 'restore'];
 
     public function alwaysIncludes(): array
     {

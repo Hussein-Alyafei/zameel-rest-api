@@ -15,7 +15,7 @@ class TeachingController extends Controller
 
     protected $request = TeachingRequest::class;
 
-    public const EXCLUDE_METHODS = ['update'];
+    public const EXCLUDE_METHODS = ['update', 'batchUpdate', 'restore', 'batchRestore'];
 
     public function filterableBy(): array
     {

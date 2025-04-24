@@ -8,7 +8,7 @@ use Orion\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
-    public const EXCLUDE_METHODS = ['store', 'destroy', 'update', 'show'];
+    public const EXCLUDE_METHODS = ['store', 'destroy', 'update', 'show', 'restore'];
 
     protected $model = User::class;
 

@@ -24,6 +24,6 @@ class PromotionController extends Controller
         $user->role_id = $role->id;
         $user->save();
 
-        return response()->json(['message' => 'ok']);
+        return response()->json(['data' => $user->toArray()]);
     }
 }
