@@ -126,15 +126,16 @@ class Handler
 
     public static function handleHttpException(Throwable $exception, Request $request, $uuid)
     {
-        if ($exception->getMessage() === "Your email address is not verified.")
+        if ($exception->getMessage() === 'Your email address is not verified.') {
             return response()->json([
                 'error' => [
                     'id' => $uuid,
                     'status' => 403,
-                    'title' => "Your email address is not verified.",
+                    'title' => 'Your email address is not verified.',
                 ],
             ], 403);
-        else
+        } else {
             return static::handleGenericException($exception, $request, $uuid);
+        }
     }
 }

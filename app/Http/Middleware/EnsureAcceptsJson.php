@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use App\Exceptions\AcceptTypeException;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,13 +15,14 @@ class EnsureAcceptsJson
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if($request->expectsJson())
+        if ($request->expectsJson()) {
             return $next($request);
+        }
 
         return response()->json([
             'error' => [
                 'status' => 400,
-                'title' => "Accept header must be application/json.",
+                'title' => 'Accept header must be application/json.',
             ],
         ], 400);
     }

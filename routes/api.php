@@ -27,7 +27,7 @@ Route::post('/logout', [AuthenticationController::class, 'logout'])->middleware(
 Route::middleware('auth:sanctum')->group(function () {
 
     Route::middleware('verified')->group(function () {
-        
+
         Route::post('/users/{user}/roles/{role}', PromotionController::class);
 
         Orion::resource('users', UserController::class)->except(UserController::EXCLUDE_METHODS)->withoutBatch();

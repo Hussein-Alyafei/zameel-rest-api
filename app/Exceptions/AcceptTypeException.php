@@ -4,4 +4,4 @@ namespace App\Exceptions;
 
 use Exception;
 
-class AcceptTypeException extends Exception { }
+class AcceptTypeException extends Exception {}
