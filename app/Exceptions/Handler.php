@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 use Throwable;
@@ -24,6 +25,8 @@ class Handler
         NotFoundHttpException::class => 'handleNotFoundException',
         UnprocessableEntityHttpException::class => 'handleUnprocessableEntityHttpException',
         SendEmailException::class => 'handleBadGatewayException',
+        AcceptTypeException::class => 'handleBadRequestException',
+        HttpException::class => 'handleHttpException',
     ];
 
     public static function handleGenericException(Throwable $exception, Request $request, $uuid)
@@ -107,6 +110,31 @@ class Handler
                 'status' => 502,
                 'title' => $exception->getMessage(),
             ],
-        ], 422);
+        ], 502);
+    }
+
+    public static function handleBadRequestException(Throwable $exception, Request $request, $uuid)
+    {
+        return response()->json([
+            'error' => [
+                'id' => $uuid,
+                'status' => 400,
+                'title' => $exception->getMessage(),
+            ],
+        ], 400);
+    }
+
+    public static function handleHttpException(Throwable $exception, Request $request, $uuid)
+    {
+        if ($exception->getMessage() === "Your email address is not verified.")
+            return response()->json([
+                'error' => [
+                    'id' => $uuid,
+                    'status' => 403,
+                    'title' => "Your email address is not verified.",
+                ],
+            ], 403);
+        else
+            return static::handleGenericException($exception, $request, $uuid);
     }
 }
