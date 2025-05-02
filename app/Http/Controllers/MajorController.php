@@ -28,4 +28,9 @@ class MajorController extends Controller
     {
         return ['college_id', 'created_at'];
     }
+
+    public function searchableBy(): array
+    {
+        return ['name'];
+    }
 }

@@ -12,10 +12,12 @@ use App\Http\Controllers\CollegeController;
 use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\MajorController;
+use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TeachingController;
+use App\Http\Controllers\UpdatePasswordController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Orion\Facades\Orion;
@@ -30,6 +32,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
         Route::post('/users/{user}/roles/{role}', PromotionController::class);
 
+        Route::post('/users/{user}/update-password', UpdatePasswordController::class);
+
         Orion::resource('users', UserController::class)->except(UserController::EXCLUDE_METHODS)->withoutBatch();
 
         Orion::resource('posts', PostController::class)->except(PostController::EXCLUDE_METHODS)->withoutBatch();
@@ -41,6 +45,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Orion::resource('subjects', SubjectController::class)->withSoftDeletes()->withoutBatch();
 
         Orion::resource('groups', GroupController::class)->except(GroupController::EXCLUDE_METHODS);
+
+        Orion::resource('members', MemberController::class)->except(MemberController::EXCLUDE_METHODS)->withoutBatch();
 
         Orion::resource('applies', ApplyController::class)->except(ApplyController::EXCLUDE_METHODS)->withoutBatch();
 

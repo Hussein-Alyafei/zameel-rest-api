@@ -18,6 +18,11 @@ class SubjectController extends Controller
         $subject->beforeDestroy($request, $subject);
     }
 
+    public function searchableBy(): array
+    {
+        return ['name'];
+    }
+
     protected $model = Subject::class;
 
     protected $policy = SubjectPolicy::class;

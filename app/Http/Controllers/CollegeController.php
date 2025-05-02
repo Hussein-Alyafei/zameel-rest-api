@@ -18,6 +18,11 @@ class CollegeController extends Controller
         $college->beforeDestroy($request, $college);
     }
 
+    public function searchableBy(): array
+    {
+        return ['name'];
+    }
+
     protected $model = College::class;
 
     protected $policy = CollegePolicy::class;
