@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
+use Smalot\PdfParser\Parser;
 
 function CSV($fileName): array
 {
@@ -20,6 +21,11 @@ function CSV($fileName): array
     }
 
     return $rows;
+}
+
+function PDFToText($file): string
+{
+    return (new Parser)->parseFile($file)->getText();
 }
 
 /**

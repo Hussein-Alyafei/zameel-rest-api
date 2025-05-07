@@ -15,7 +15,9 @@ use App\Http\Controllers\MajorController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PromotionController;
+use App\Http\Controllers\QuizController;
 use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\SummaryController;
 use App\Http\Controllers\TeachingController;
 use App\Http\Controllers\UpdatePasswordController;
 use App\Http\Controllers\UserController;
@@ -52,6 +54,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
         Orion::resource('teaching', TeachingController::class)->except(TeachingController::EXCLUDE_METHODS);
 
+        Route::get('/books/{book}/summary', SummaryController::class);
+        Route::get('/books/{book}/quiz', QuizController::class);
         Orion::resource('books', BookController::class)->withoutBatch();
 
         Orion::resource('assignments', AssignmentController::class)->withoutBatch();
