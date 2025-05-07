@@ -34,7 +34,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
         Route::post('/users/{user}/roles/{role}', PromotionController::class);
 
-        Route::post('/users/{user}/update-password', UpdatePasswordController::class);
+        Route::post('/users/update-password', UpdatePasswordController::class);
 
         Orion::resource('users', UserController::class)->except(UserController::EXCLUDE_METHODS)->withoutBatch();
 
