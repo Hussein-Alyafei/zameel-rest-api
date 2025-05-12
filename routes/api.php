@@ -36,10 +36,10 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/users/{user}/roles/{role}', PromotionController::class);
 
         Route::post('/users/update-password', UpdatePasswordController::class);
-        
+
         Orion::resource('users', UserController::class)->except(UserController::EXCLUDE_METHODS)->withoutBatch();
 
-        Route::get('/users/me', function() {
+        Route::get('/users/me', function () {
             return response()->json(Auth::user());
         });
 
