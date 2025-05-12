@@ -21,6 +21,7 @@ use App\Http\Controllers\SummaryController;
 use App\Http\Controllers\TeachingController;
 use App\Http\Controllers\UpdatePasswordController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Orion\Facades\Orion;
 
@@ -35,8 +36,12 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/users/{user}/roles/{role}', PromotionController::class);
 
         Route::post('/users/update-password', UpdatePasswordController::class);
-
+        
         Orion::resource('users', UserController::class)->except(UserController::EXCLUDE_METHODS)->withoutBatch();
+
+        Route::get('/users/me', function() {
+            return response()->json(Auth::user());
+        });
 
         Orion::resource('posts', PostController::class)->except(PostController::EXCLUDE_METHODS)->withoutBatch();
 
