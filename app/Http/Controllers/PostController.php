@@ -37,12 +37,13 @@ class PostController extends Controller
 
         $user = Auth::user();
 
-        if(Gate::forUser($user)->check('admin'))
+        if (Gate::forUser($user)->check('admin')) {
             $query->admin();
-        else if(Gate::forUser($user)->any(['manager', 'academic']))
+        } elseif (Gate::forUser($user)->any(['manager', 'academic'])) {
             $query->academic();
-        else
+        } else {
             $query->student();
+        }
 
         $pass = Validator::make(
             ['cursor' => $request->query('cursor', Carbon::now())],
