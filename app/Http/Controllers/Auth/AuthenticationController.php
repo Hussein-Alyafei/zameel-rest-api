@@ -36,6 +36,10 @@ class AuthenticationController extends Controller
     public function register(RegisterRequest $request)
     {
         $data = $request->validated();
+        if (User::where('email', $data['email'])->exists()) {
+            return response()->json(['message' => 'User already exists.'], 409);
+        }
+
         $user = User::create($data);
         $response = $user->toArray();
         $response['token'] = $user->createToken($data['deviceName'])->plainTextToken;
