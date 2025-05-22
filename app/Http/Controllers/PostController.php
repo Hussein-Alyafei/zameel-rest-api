@@ -55,6 +55,30 @@ class PostController extends Controller
         return $query;
     }
 
+    public function deleted(Request $request)
+    {
+
+        $query = Post::onlyTrashed();
+        $user = Auth::user();
+
+        if (Gate::forUser($user)->check('admin')) {
+            $query->admin();
+        } elseif (Gate::forUser($user)->any(['manager', 'academic'])) {
+            $query->academic();
+        } else {
+            $query->student();
+        }
+
+        $pass = Validator::make(
+            ['cursor' => $request->query('cursor', Carbon::now())],
+            ['cursor' => ['sometimes', Rule::date()->format('Y-m-d H:i:s')]]
+        )->passes();
+        $time = $pass ? $request->query('cursor', Carbon::now()) : Carbon::now();
+        $query->where('deleted_at', '>', $time)->latest()->take(12);
+
+        return response()->json(['data' => $query->get()]);
+    }
+
     public function alwaysIncludes(): array
     {
         return ['files'];

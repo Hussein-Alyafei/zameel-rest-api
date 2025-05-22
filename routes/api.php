@@ -43,6 +43,7 @@ Route::middleware('auth:sanctum')->group(function () {
             return response()->json(Auth::user());
         });
 
+        Route::get('/posts/deleted', [PostController::class, 'deleted']);
         Orion::resource('posts', PostController::class)->except(PostController::EXCLUDE_METHODS)->withoutBatch();
 
         Orion::resource('colleges', CollegeController::class)->withSoftDeletes()->withoutBatch();
@@ -59,10 +60,12 @@ Route::middleware('auth:sanctum')->group(function () {
 
         Orion::resource('teaching', TeachingController::class)->except(TeachingController::EXCLUDE_METHODS);
 
+        Route::get('/books/deleted', [BookController::class, 'deleted']);
         Route::get('/books/{book}/summary', SummaryController::class);
         Route::get('/books/{book}/quiz', QuizController::class);
         Orion::resource('books', BookController::class)->withoutBatch();
 
+        Route::get('/assignments/deleted', [AssignmentController::class, 'deleted']);
         Orion::resource('assignments', AssignmentController::class)->withoutBatch();
 
         Orion::resource('deliveries', DeliveryController::class)->except(DeliveryController::EXCLUDE_METHODS)->withoutBatch();
