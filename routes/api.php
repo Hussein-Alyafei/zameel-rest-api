@@ -72,15 +72,15 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::post('verify-email', VerifyEmailController::class)
-        ->middleware(['throttle:6,1'])
         ->name('verification.verify');
 
     Route::post('email/verification-notification', EmailVerificationNotificationController::class)
-        ->middleware('throttle:6,1')
+        ->middleware(['throttle:1,1'])
         ->name('verification.send');
 });
 
 Route::post('forgot-password', PasswordResetLinkController::class)
+    ->middleware(['throttle:1,1'])
     ->name('password.email');
 
 Route::post('reset-password', NewPasswordController::class)
