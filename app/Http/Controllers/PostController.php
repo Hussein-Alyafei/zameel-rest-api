@@ -46,11 +46,19 @@ class PostController extends Controller
         }
 
         $pass = Validator::make(
-            ['cursor' => $request->query('cursor', Carbon::now())],
-            ['cursor' => ['sometimes', Rule::date()->format('Y-m-d H:i:s')]]
+            [
+                'cursor' => $request->query('cursor', Carbon::now()),
+                'before' => $request->query('before', 'false'),
+            ],
+            [
+                'cursor' => ['sometimes', Rule::date()->format('Y-m-d H:i:s')],
+                'before' => ['sometimes', Rule::in(['true', 'false'])],
+            ]
         )->passes();
+
+        $operator = $request->query('before', 'false') === 'true' ? '<' : '>';
         $time = $pass ? $request->query('cursor', Carbon::now()) : Carbon::now();
-        $query->where('created_at', '>', $time)->latest()->take(12);
+        $query->where('created_at', $operator, $time)->latest()->take(12);
 
         return $query;
     }
