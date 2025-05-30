@@ -126,23 +126,17 @@
                       </tr>
                       <tr>
                         <td align="center" style="font-size:0px;padding:10px 25px;padding-top:50px;word-break:break-word;">
-                          <div style="font-family:arial;font-size:20px;line-height:30px;text-align:center;color:#000000;">قم بتأكيد إعادة تعيين كلمة مرور حسابك في زميل عبر الضغط على الرابط أدناه</div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td align="center" vertical-align="middle" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                          <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:separate;line-height:100%;">
-                            <tr>
-                              <td align="center" bgcolor="#4f39f6" role="presentation" style="border:none;border-radius:3px;cursor:auto;mso-padding-alt:10px 25px;background:#4f39f6;" valign="middle">
-                                <a href="{{ $link }}" style="display:inline-block;background:#4f39f6;color:#ffffff;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:20px;font-weight:bolder;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px;mso-padding-alt:0px;border-radius:3px;" target="_blank"> رابط التأكيد </a>
-                              </td>
-                            </tr>
-                          </table>
+                          <div style="font-family:arial;font-size:20px;line-height:30px;text-align:center;color:#000000;">قم بتأكيد إعادة تعيين كلمة مرور حسابك في زميل عبر نسخ الرمز أدناه</div>
                         </td>
                       </tr>
                       <tr>
                         <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                          <div style="font-family:arial;font-size:20px;line-height:30px;text-align:center;color:#000000;">لا تقم بمشاركة الرابط مع أحد</div>
+                          <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:35px;font-weight:bolder;letter-spacing:5px;line-height:1;text-align:center;color:#4f39f6;">{{ $otp }}</div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                          <div style="font-family:arial;font-size:20px;line-height:30px;text-align:center;color:#000000;">لا تقم بمشاركة الرمز مع أحد</div>
                         </td>
                       </tr>
                     </tbody>

@@ -15,7 +15,7 @@ class PasswordResetMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(public $link)
+    public function __construct(public $otp)
     {
         //
     }
@@ -38,7 +38,7 @@ class PasswordResetMail extends Mailable
         return new Content(
             view: 'mails.password-reset',
             with: [
-                'link' => $this->link,
+                'otp' => $this->otp,
             ]
         );
     }
@@ -51,10 +51,5 @@ class PasswordResetMail extends Mailable
     public function attachments(): array
     {
         return [];
-    }
-
-    public static function passwordResetURL($token)
-    {
-        return config('app.frontend_url').'reset-password?token='.$token;
     }
 }

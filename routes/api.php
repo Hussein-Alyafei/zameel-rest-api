@@ -6,7 +6,7 @@ use App\Http\Controllers\AssistantChatController;
 use App\Http\Controllers\Auth\AuthenticationController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\NewPasswordController;
-use App\Http\Controllers\Auth\PasswordResetLinkController;
+use App\Http\Controllers\Auth\PasswordResetOTPController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CollegeController;
@@ -87,7 +87,7 @@ Route::middleware('auth:sanctum')->group(function () {
         ->name('verification.send');
 });
 
-Route::post('forgot-password', PasswordResetLinkController::class)
+Route::post('forgot-password', PasswordResetOTPController::class)
     ->middleware(['throttle:1,1'])
     ->name('password.email');
 

@@ -4,13 +4,13 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\Rules;
-use Inertia\Response;
 
 class NewPasswordController extends Controller
 {
@@ -18,7 +18,7 @@ class NewPasswordController extends Controller
     {
         $request->validate(
             [
-                'token' => 'required',
+                'otp' => 'required',
                 'email' => 'required|email|exists:users',
                 'password' => ['required', 'confirmed', Rules\Password::defaults()],
             ],
@@ -28,27 +28,22 @@ class NewPasswordController extends Controller
             ]
         );
 
-        // Here we will attempt to reset the user's password. If it is successful we
-        // will update the password on an actual user model and persist it to the
-        // database. Otherwise we will parse the error and return the response.
-        $status = Password::reset(
-            $request->only('email', 'password', 'password_confirmation', 'token'),
-            function ($user) use ($request) {
-                $user->forceFill([
-                    'password' => Hash::make($request->password),
-                ])->save();
+        $user = User::where('email', $request->email)->first();
+        $record = DB::table('password_reset_otps')
+            ->where('created_at', '>', Carbon::now()->subMinutes(config('auth.passwords.users.expire')))
+            ->where('email', $request->email)->firstOrFail(['*'], 'No reset requests.');
 
-                event(new PasswordReset($user));
-            }
-        );
+        if (Hash::check($request->otp, $record->otp)) {
+            $user->forceFill([
+                'password' => Hash::make($request->password),
+            ])->save();
 
-        // If the password was successfully reset, we will redirect the user back to
-        // the application's home authenticated view. If there is an error we can
-        // redirect them back to where they came from with their error message.
-        if ($status == Password::PASSWORD_RESET) {
+            event(new PasswordReset($user));
             User::where('email', $request->email)->first()->tokens()->delete();
 
             return response()->json(['message' => 'Password reset.'], 200);
+        } else {
+            return response()->json(['message' => 'Bad request.'], 400);
         }
 
         throw new Exception('Password reset failed', 500);
