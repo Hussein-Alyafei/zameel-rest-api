@@ -30,7 +30,7 @@ class SendMessageToAI implements ShouldQueue
             $text .= "\n\n".PDFToText(Storage::url($book->path));
         }
 
-        $messages = array_merge(json_decode($this->chat->getAttributes()['messages'], true), [['role' => 'user', 'content' => $text]]);
+        $messages = array_merge($this->chat->messages, [['role' => 'user', 'content' => $text]]);
 
         $result = OpenAI::chat()->create([
             'model' => config('openai.chat_model'),

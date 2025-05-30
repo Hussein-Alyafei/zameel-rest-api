@@ -15,7 +15,7 @@ class AssistantChatController extends Controller
         $messages = [
             ['role' => 'system', 'content' => $systemMessage],
         ];
-        $chat = AssistantChat::create(['messages' => json_encode($messages)]);
+        $chat = AssistantChat::create(['messages' => $messages]);
 
         return response()->json(['date' => ['id' => $chat->id]]);
     }
