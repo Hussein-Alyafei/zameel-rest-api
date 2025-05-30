@@ -89,7 +89,7 @@ class PostController extends Controller
 
     public function alwaysIncludes(): array
     {
-        return ['files'];
+        return ['files', 'user'];
     }
 
     public function exposedScopes(): array
