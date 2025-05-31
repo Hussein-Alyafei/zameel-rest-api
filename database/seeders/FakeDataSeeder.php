@@ -6,19 +6,11 @@ use App\Models\File;
 use App\Models\Group;
 use App\Models\Post;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 
 class FakeDataSeeder extends BaseSeeder
 {
     public function run(): void
     {
-        User::create([
-            'name' => 'admin',
-            'email' => 'admin@example.com',
-            'password' => Hash::make('password'),
-            'role_id' => 1,
-        ]);
-
         User::factory(100)->create();
 
         $groups = Group::factory(20)->create();

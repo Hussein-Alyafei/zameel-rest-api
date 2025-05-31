@@ -15,7 +15,8 @@ class PromotionController extends Controller
      */
     public function __invoke(Request $request, User $user, Role $role)
     {
-        if ($role->id >= User::MANAGER || $user->role_id >= User::MANAGER) {
+        Gate::allowIf($user->id !== 1);
+        if ($role->id >= Role::MANAGER || $user->role_id >= Role::MANAGER) {
             Gate::allowIf(Gate::forUser(Auth::user())->check('admin'));
         } else {
             Gate::allowIf(Gate::forUser(Auth::user())->any(['admin', 'manager']));

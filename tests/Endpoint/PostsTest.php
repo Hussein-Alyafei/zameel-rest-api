@@ -5,6 +5,7 @@ use App\Models\File;
 use App\Models\Group;
 use App\Models\Major;
 use App\Models\Post;
+use App\Models\Role;
 use App\Models\Subject;
 use App\Models\User;
 use Illuminate\Http\UploadedFile;
@@ -26,7 +27,7 @@ it('can add post to college and major', function () {
     $college = College::create(['name' => 'aaa']);
     $major = Major::create(['name' => 'aaa', 'years' => 4, 'college_id' => $college->id, 'degree_id' => 1]);
 
-    User::find(User::MANAGER)->colleges()->attach($college->id);
+    User::find(Role::MANAGER)->colleges()->attach($college->id);
 
     $dataForCollege = [
         'taggable_type' => College::class,
@@ -49,10 +50,10 @@ it('can add post to college and major', function () {
 
 it('can add post to group', function () {
     $group = Group::factory()->create();
-    Group::find($group->id)->members()->attach(User::REPRESENTER, ['is_representer' => true]);
+    Group::find($group->id)->members()->attach(Role::REPRESENTER, ['is_representer' => true]);
     $subject = Subject::create(['name' => 'aaa']);
-    User::find(User::ACADEMIC)->teachingGroups()->attach($group->id, ['subject_id' => $subject->id]);
-    User::find(User::MANAGER)->teachingGroups()->attach($group->id, ['subject_id' => $subject->id]);
+    User::find(Role::ACADEMIC)->teachingGroups()->attach($group->id, ['subject_id' => $subject->id]);
+    User::find(Role::MANAGER)->teachingGroups()->attach($group->id, ['subject_id' => $subject->id]);
 
     $data = [
         'taggable_type' => Group::class,

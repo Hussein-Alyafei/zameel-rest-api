@@ -18,4 +18,9 @@ class UserController extends Controller
     {
         return ['name', 'role_id', 'email_verified_at', 'email', 'created_at'];
     }
+
+    public function sortableBy(): array
+    {
+        return ['name', 'role_id', 'email_verified_at', 'email', 'created_at'];
+    }
 }

@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 
 class AuthenticationController extends Controller
@@ -38,6 +41,11 @@ class AuthenticationController extends Controller
         $data = $request->validated();
         if (User::where('email', $data['email'])->exists()) {
             return response()->json(['message' => 'User already exists.'], 409);
+        }
+
+        if (request()->query('academic', 'false') === 'true') {
+            Gate::allowIf(Gate::forUser(Auth::guard('sanctum')->user())->any(['admin', 'manager']));
+            $data['role_id'] = Role::ACADEMIC;
         }
 
         $user = User::create($data);

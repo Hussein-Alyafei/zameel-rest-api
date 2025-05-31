@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\College;
 use App\Models\Group;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -17,11 +18,7 @@ class TestSeeder extends Seeder
     {
         $this->call(DatabaseSeeder::class);
 
-        User::create([
-            'name' => 'admin',
-            'email' => 'admin@example.com',
-            'password' => Hash::make('password'),
-            'role_id' => User::ADMIN,
+        User::find(1)->update([
             'email_verified_at' => now(),
         ]);
 
@@ -29,7 +26,7 @@ class TestSeeder extends Seeder
             'name' => 'manager',
             'email' => 'manager@example.com',
             'password' => Hash::make('password'),
-            'role_id' => User::MANAGER,
+            'role_id' => Role::MANAGER,
             'email_verified_at' => now(),
         ]);
 
@@ -37,7 +34,7 @@ class TestSeeder extends Seeder
             'name' => 'academic',
             'email' => 'academic@example.com',
             'password' => Hash::make('password'),
-            'role_id' => User::ACADEMIC,
+            'role_id' => Role::ACADEMIC,
             'email_verified_at' => now(),
         ]);
 
@@ -45,7 +42,7 @@ class TestSeeder extends Seeder
             'name' => 'representer',
             'email' => 'representer@example.com',
             'password' => Hash::make('password'),
-            'role_id' => User::REPRESENTER,
+            'role_id' => Role::REPRESENTER,
             'email_verified_at' => now(),
         ]);
 
@@ -53,7 +50,7 @@ class TestSeeder extends Seeder
             'name' => 'student',
             'email' => 'student@example.com',
             'password' => Hash::make('password'),
-            'role_id' => User::STUDENT,
+            'role_id' => Role::STUDENT,
             'email_verified_at' => now(),
         ]);
 
