@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Post;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class PostSeeder extends Seeder
@@ -16,7 +15,7 @@ class PostSeeder extends Seeder
         for ($i = 0; $i < 500; $i++) {
             $post = Post::create([
                 'content' => fake()->sentence(rand(10, 25)),
-                'user_id' => 1
+                'user_id' => 1,
             ]);
 
             $num = rand(1, 4);
@@ -29,7 +28,7 @@ class PostSeeder extends Seeder
                 $post->files()->create([
                     'type' => $type,
                     'ext' => $ext,
-                    'name' => fake()->sentence(3) . $ext,
+                    'name' => fake()->sentence(3).$ext,
                     'url' => $url,
                 ]);
             }
