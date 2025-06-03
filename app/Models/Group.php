@@ -22,7 +22,7 @@ class Group extends Model
     public function applies(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'group_user_applies')
-            ->using(Apply::class);
+            ->using(Apply::class)->withPivot('note');
     }
 
     public function members(): belongsToMany
@@ -50,4 +50,10 @@ class Group extends Model
     {
         return $this->hasMany(Book::class);
     }
+
+    public function teachers(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'group_subject_user')->withPivot('subject_id');
+    }
+
 }

@@ -53,7 +53,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function applies(): BelongsToMany
     {
         return $this->belongsToMany(Group::class, 'group_user_applies')
-            ->using(Apply::class);
+            ->using(Apply::class)->withPivot('note');
     }
 
     public function posts(): HasMany

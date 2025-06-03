@@ -14,4 +14,11 @@ class ApplyRequest extends Request
             'note' => 'sometimes|string|max:255',
         ];
     }
+
+    public function updateRules(): array
+    {
+        return [
+            'status_id' => 'required|integer|numeric|exists:statuses,id',
+        ];
+    }
 }

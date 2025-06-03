@@ -15,7 +15,7 @@ class GroupController extends Controller
 
     protected $request = GroupRequest::class;
 
-    public const EXCLUDE_METHODS = ['update', 'destroy', 'batchUpdate', 'batchDestroy', 'batchRestore'];
+    public const EXCLUDE_METHODS = ['update', 'destroy', 'restore', 'batchUpdate', 'batchDestroy', 'batchRestore'];
 
     public function filterableBy(): array
     {

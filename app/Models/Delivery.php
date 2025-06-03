@@ -16,7 +16,7 @@ class Delivery extends Pivot
         'type',
         'content',
         'assignment_id',
-        'student_id',
+        'user_id',
     ];
 
     public function assignment(): BelongsTo
@@ -24,8 +24,8 @@ class Delivery extends Pivot
         return $this->belongsTo(Assignment::class);
     }
 
-    public function student(): BelongsTo
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'student_id');
+        return $this->belongsTo(User::class);
     }
 }
