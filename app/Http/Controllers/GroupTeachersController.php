@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\College;
 use App\Models\Group;
 use App\Policies\TeachingPolicy;
-use Illuminate\Http\Request;
 use Orion\Http\Controllers\RelationController;
 
 class GroupTeachersController extends RelationController
@@ -16,7 +14,7 @@ class GroupTeachersController extends RelationController
 
     protected $relation = 'teachers';
 
-    public const EXCLUDE_METHODS = ['store', 'destroy', 'update', 'show', 'restore', 'associate' , 'dissociate'];
+    public const EXCLUDE_METHODS = ['store', 'destroy', 'update', 'show', 'restore', 'associate', 'dissociate'];
 
     public function alwaysIncludes(): array
     {

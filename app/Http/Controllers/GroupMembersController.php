@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\College;
 use App\Models\Group;
 use App\Policies\MemberPolicy;
-use Illuminate\Http\Request;
 use Orion\Http\Controllers\RelationController;
 
 class GroupMembersController extends RelationController

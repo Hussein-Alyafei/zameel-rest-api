@@ -57,30 +57,30 @@ Route::middleware('auth:sanctum')->group(function () {
         Orion::resource('posts', PostController::class)->except(PostController::EXCLUDE_METHODS)->withoutBatch();
 
         Orion::resource('colleges', CollegeController::class)->withSoftDeletes()->withoutBatch();
-        Orion::hasManyResource('colleges', 'majors', CollegeMajorsController::class)->except(CollegeMajorsController::EXCLUDE_METHODS)->withoutBatch();;
-        
+        Orion::hasManyResource('colleges', 'majors', CollegeMajorsController::class)->except(CollegeMajorsController::EXCLUDE_METHODS)->withoutBatch();
+
         Orion::resource('majors', MajorController::class)->withSoftDeletes()->withoutBatch();
-        
+
         Orion::resource('subjects', SubjectController::class)->withSoftDeletes()->withoutBatch();
-        
+
         Orion::resource('groups', GroupController::class)->except(GroupController::EXCLUDE_METHODS);
         // Orion::belongsToManyResource('groups', 'applies', GroupAppliesController::class)->except(GroupAppliesController::EXCLUDE_METHODS)->withoutBatch();;
         // Orion::belongsToManyResource('groups', 'members', GroupMembersController::class)->except(GroupMembersController::EXCLUDE_METHODS)->withoutBatch();;
         // Orion::hasManyResource('groups', 'teachers', GroupTeachersController::class)->except(GroupTeachersController::EXCLUDE_METHODS)->withoutBatch();;
         // Orion::hasManyResource('groups', 'assignments', GroupAssignmentsController::class)->except(GroupAppliesController::EXCLUDE_METHODS)->withoutBatch();;
-        Orion::hasManyResource('groups', 'books', GroupBooksController::class)->except(GroupBooksController::EXCLUDE_METHODS)->withoutBatch();;
-        
+        Orion::hasManyResource('groups', 'books', GroupBooksController::class)->except(GroupBooksController::EXCLUDE_METHODS)->withoutBatch();
+
         // Orion::resource('members', MemberController::class)->except(MemberController::EXCLUDE_METHODS)->withoutBatch();
-        
+
         // Orion::resource('applies', ApplyController::class)->except(ApplyController::EXCLUDE_METHODS)->withoutBatch();
-        
+
         // Orion::resource('teaching', TeachingController::class)->except(TeachingController::EXCLUDE_METHODS);
-        
+
         Route::get('/books/deleted', [BookController::class, 'deleted']);
         Route::get('/books/{book}/summary', SummaryController::class);
         Route::get('/books/{book}/quiz', QuizController::class);
         Orion::resource('books', BookController::class)->withoutBatch();
-        
+
         Route::get('/assignments/deleted', [AssignmentController::class, 'deleted']);
         Orion::resource('assignments', AssignmentController::class)->withoutBatch();
         // Orion::hasManyResource('assignments', 'deliveries', AssignmentDeliveriesController::class)->except(AssignmentDeliveriesController::EXCLUDE_METHODS)->withoutBatch();;

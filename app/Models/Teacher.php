@@ -8,7 +8,8 @@ use Mockery\Matcher\Subset;
 
 class Teacher extends Pivot
 {
-    public function subject() : BelongsTo {
+    public function subject(): BelongsTo
+    {
         return $this->belongsTo(Subset::class);
     }
 }

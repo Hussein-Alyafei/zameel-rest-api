@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\College;
 use App\Policies\MajorPolicy;
-use Illuminate\Http\Request;
 use Orion\Http\Controllers\RelationController;
 
 class CollegeMajorsController extends RelationController
@@ -15,5 +14,5 @@ class CollegeMajorsController extends RelationController
 
     protected $relation = 'majors';
 
-    public const EXCLUDE_METHODS = ['store', 'destroy', 'update', 'show', 'restore', 'associate' , 'dissociate'];
+    public const EXCLUDE_METHODS = ['store', 'destroy', 'update', 'show', 'restore', 'associate', 'dissociate'];
 }

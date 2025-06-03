@@ -55,5 +55,4 @@ class Group extends Model
     {
         return $this->belongsToMany(User::class, 'group_subject_user')->withPivot('subject_id');
     }
-
 }

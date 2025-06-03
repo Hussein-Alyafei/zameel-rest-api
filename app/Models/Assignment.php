@@ -44,6 +44,4 @@ class Assignment extends Model
     {
         return $this->hasMany(Delivery::class);
     }
-
-    
 }
