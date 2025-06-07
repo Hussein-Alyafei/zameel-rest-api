@@ -14,7 +14,7 @@ class AssignmentDeliveriesController extends RelationController
 
     protected $relation = 'deliveries';
 
-    public const EXCLUDE_METHODS = ['store', 'destroy', 'update', 'show', 'restore', 'associate', 'dissociate'];
+    public const EXCLUDE_METHODS = ['update', 'show', 'restore', 'associate', 'dissociate'];
 
     public function alwaysIncludes(): array
     {
