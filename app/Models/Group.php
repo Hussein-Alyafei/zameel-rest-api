@@ -53,6 +53,6 @@ class Group extends Model
     public function teachers(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'group_subject_user')
-        ->using(Teacher::class)->withPivot('subject_id');
+            ->using(Teacher::class)->withPivot('subject_id');
     }
 }

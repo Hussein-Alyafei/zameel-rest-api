@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\ApplyController;
 use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\AssignmentDeliveriesController;
 use App\Http\Controllers\AssistantChatController;
@@ -19,13 +18,11 @@ use App\Http\Controllers\GroupController;
 use App\Http\Controllers\GroupMembersController;
 use App\Http\Controllers\GroupTeachersController;
 use App\Http\Controllers\MajorController;
-use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\SummaryController;
-use App\Http\Controllers\TeachingController;
 use App\Http\Controllers\UpdatePasswordController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -78,7 +75,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
         // Orion::hasManyResource('groups', 'assignments', GroupAssignmentsController::class)->except(GroupAppliesController::EXCLUDE_METHODS)->withoutBatch();;
         Orion::hasManyResource('groups', 'books', GroupBooksController::class)->except(GroupBooksController::EXCLUDE_METHODS)->withoutBatch();
-
 
         Route::get('/books/deleted', [BookController::class, 'deleted']);
         Route::get('/books/{book}/summary', SummaryController::class);

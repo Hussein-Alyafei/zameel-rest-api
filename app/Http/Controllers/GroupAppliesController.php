@@ -25,7 +25,7 @@ class GroupAppliesController extends RelationController
 
     public const EXCLUDE_METHODS = ['update', 'restore', 'associate', 'dissociate'];
 
-        public function alwaysIncludes(): array
+    public function alwaysIncludes(): array
     {
         return ['user'];
     }
@@ -54,22 +54,25 @@ class GroupAppliesController extends RelationController
         ];
     }
 
-    public function accept(Request $request, Apply $apply) {
+    public function accept(Request $request, Apply $apply)
+    {
         Gate::allowIf(Gate::forUser(Auth::user())->any(['admin', 'manager', 'representer']));
-        
+
         $apply->status_id = Status::ACCEPTED;
         $apply->save();
-        
+
         $apply->group()->first()->members()->attach([$apply->user_id]);
+
         return response()->json(['message' => 'ok.']);
     }
-    
-    public function reject(Request $request, Apply $apply) {
+
+    public function reject(Request $request, Apply $apply)
+    {
         Gate::allowIf(Gate::forUser(Auth::user())->any(['admin', 'manager', 'representer']));
 
         $data = $request->validate(['note' => 'sometimes|string|max:255']);
 
-        if(key_exists('note', $data)) {
+        if (array_key_exists('note', $data)) {
             $apply->note = $data['note'];
         } else {
             $apply->note = null;

@@ -12,5 +12,4 @@ class MemberRequest extends Request
             'is_representer' => 'sometimes|boolean',
         ];
     }
-    
 }
