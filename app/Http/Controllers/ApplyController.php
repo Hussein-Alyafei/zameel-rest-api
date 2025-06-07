@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ApplyRequest;
 use App\Models\Apply;
+use App\Models\Status;
 use App\Policies\ApplyPolicy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -24,7 +25,9 @@ class ApplyController extends Controller
 
     protected function performFill(Request $request, Model $entity, array $attributes): void
     {
-        $entity->fill([...$attributes, 'user_id' => Auth::user()->id]);
+        $attributes['user_id'] = Auth::user()->id;
+        $attributes['status_id'] = Status::PENDING;
+        $entity->fill($attributes);
     }
 
     public function filterableBy(): array

@@ -6,10 +6,11 @@ use Orion\Http\Requests\Request;
 
 class MemberRequest extends Request
 {
-    public function updateRules(): array
+    public function attachRules(): array
     {
         return [
-            'is_representer' => 'boolean',
+            'is_representer' => 'sometimes|boolean',
         ];
     }
+    
 }

@@ -19,16 +19,15 @@ class Group extends Model
         'major_id',
     ];
 
-    public function applies(): BelongsToMany
+    public function applies(): HasMany
     {
-        return $this->belongsToMany(User::class, 'group_user_applies')
-            ->using(Apply::class)->withPivot('note');
+        return $this->hasMany(Apply::class);
     }
 
     public function members(): belongsToMany
     {
         return $this->belongsToMany(User::class, 'group_user_members')
-            ->using(Member::class);
+            ->using(Member::class)->withPivot(['is_representer']);
     }
 
     public function major(): BelongsTo
@@ -53,6 +52,7 @@ class Group extends Model
 
     public function teachers(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'group_subject_user')->withPivot('subject_id');
+        return $this->belongsToMany(User::class, 'group_subject_user')
+        ->using(Teacher::class)->withPivot('subject_id');
     }
 }

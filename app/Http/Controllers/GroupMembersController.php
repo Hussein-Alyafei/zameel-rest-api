@@ -3,16 +3,37 @@
 namespace App\Http\Controllers;
 
 use App\Models\Group;
-use App\Policies\MemberPolicy;
-use Orion\Http\Controllers\RelationController;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
-class GroupMembersController extends RelationController
+class GroupMembersController extends Controller
 {
-    protected $model = Group::class;
+    public function index(Request $request, Group $group) {
+        return response()->json(['data' => $group->members()->get()]);
+    }
 
-    protected $policy = MemberPolicy::class;
+    public function attach(Request $request, Group $group, User $user) {
+        Gate::allowIf(Gate::forUser(Auth::user())->any(['admin', 'manager', 'representer']));
+        $data = $request->validate(['is_representer' => 'sometimes|boolean']);
 
-    protected $relation = 'members';
+        $group->members()->attach($user->id, $data);
+        return response()->json(['data' => $user], 201);
+    }
+    
+    public function detach(Request $request, Group $group, User $user) {
+        Gate::allowIf(Gate::forUser(Auth::user())->any(['admin', 'manager', 'representer']));
 
-    public const EXCLUDE_METHODS = ['store', 'destroy', 'update', 'show', 'restore', 'attach', 'detach', 'sync', 'toggle', 'updatePivot'];
+        $group->members()->detach([$user->id]);
+        return response()->json(['data' => $user]);
+    }
+    
+    public function update(Request $request, Group $group, User $user) {
+        Gate::allowIf(Gate::forUser(Auth::user())->any(['admin', 'manager']));
+        $data = $request->validate(['is_representer' => 'sometimes|boolean']);
+
+        $group->members()->updateExistingPivot($user->id, $data);
+        return response()->json(['data' => $user]);
+    }
 }

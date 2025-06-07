@@ -11,6 +11,12 @@ class Status extends Model
 
     public $timestamps = false;
 
+    public const ACCEPTED = 1;
+
+    public const PENDING = 2;
+
+    public const REJECTED = 3;
+
     protected $fillable = [
         'name',
     ];

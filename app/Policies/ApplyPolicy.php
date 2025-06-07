@@ -29,7 +29,7 @@ class ApplyPolicy
      */
     public function create(User $user): bool
     {
-        return Gate::forUser($user)->any(['student', 'representer']);
+        return Gate::forUser($user)->any(['student', 'representer', 'admin']);
     }
 
     /**
