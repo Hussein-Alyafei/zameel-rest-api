@@ -50,6 +50,10 @@ Route::middleware('auth:sanctum')->group(function () {
             return response()->json(Auth::user());
         });
 
+        Route::get('/users/me/groups', function () {
+            return response()->json(Auth::user()->groups()->get());
+        });
+
         Route::get('/posts/deleted', [PostController::class, 'deleted']);
         Orion::resource('posts', PostController::class)->except(PostController::EXCLUDE_METHODS)->withoutBatch();
 
