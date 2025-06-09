@@ -21,7 +21,7 @@ class ApplyController extends Controller
 
     protected $pivotFillable = ['note'];
 
-    public const EXCLUDE_METHODS = ['restore'];
+    public const EXCLUDE_METHODS = ['update', 'restore'];
 
     protected function performFill(Request $request, Model $entity, array $attributes): void
     {

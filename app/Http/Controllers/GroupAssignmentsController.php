@@ -39,6 +39,6 @@ class GroupAssignmentsController extends RelationController
 
     public function filterableBy(): array
     {
-        return [];
+        return ['due_date', 'subject_id', 'group_id', 'created_at'];
     }
 }
