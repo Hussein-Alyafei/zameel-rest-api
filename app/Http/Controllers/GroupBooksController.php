@@ -29,8 +29,8 @@ class GroupBooksController extends RelationController
         $query = parent::buildIndexFetchQuery($request, $parentEntity, $requestedRelations);
 
         Validator::make(
-            [ 'year' => $request->query('year', 1) ],
-            [ 'year' => 'sometimes|integer|numeric' ]
+            ['year' => $request->query('year', 1)],
+            ['year' => 'sometimes|integer|numeric']
         )->validate();
 
         return $query->where('year', $request->query('year', 1));
@@ -38,7 +38,7 @@ class GroupBooksController extends RelationController
 
     public const EXCLUDE_METHODS = ['restore', 'associate', 'dissociate'];
 
-        protected function performFill(
+    protected function performFill(
         Request $request,
         Model $parentEntity,
         Model $entity,
@@ -49,7 +49,7 @@ class GroupBooksController extends RelationController
         $entity->fill($attributes);
     }
 
-        public function filterableBy(): array
+    public function filterableBy(): array
     {
         return [
             'subject_id',
