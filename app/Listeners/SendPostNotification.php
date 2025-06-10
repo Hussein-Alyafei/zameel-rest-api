@@ -4,7 +4,6 @@ namespace App\Listeners;
 
 use App\Events\PostPublished;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 
 class SendPostNotification implements ShouldQueue
 {

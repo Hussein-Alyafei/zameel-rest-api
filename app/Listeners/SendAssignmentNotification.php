@@ -4,7 +4,6 @@ namespace App\Listeners;
 
 use App\Events\AssignmentPublished;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 
 class SendAssignmentNotification implements ShouldQueue
 {

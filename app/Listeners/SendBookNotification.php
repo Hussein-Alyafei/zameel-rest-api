@@ -4,7 +4,6 @@ namespace App\Listeners;
 
 use App\Events\BooKPublished;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 
 class SendBookNotification implements ShouldQueue
 {
