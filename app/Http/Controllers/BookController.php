@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\BookPublished;
 use App\Http\Requests\BookRequest;
 use App\Jobs\MakeQuiz;
 use App\Jobs\SummarizeBook;
@@ -95,6 +96,8 @@ class BookController extends Controller
 
         SummarizeBook::dispatch($book, $languageAR);
         MakeQuiz::dispatch($book, $languageEN);
+
+        BookPublished::dispatch($book);
     }
 
     protected function beforeDestroy(Request $request, Model $book)

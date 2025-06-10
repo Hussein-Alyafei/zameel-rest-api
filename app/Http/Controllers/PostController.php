@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PostPublished;
 use App\Http\Requests\PostRequest;
 use App\Models\File;
 use App\Models\Post;
@@ -143,6 +144,8 @@ class PostController extends Controller
                 'post_id' => $post->id,
             ]);
         }
+
+        PostPublished::dispatch($post);
     }
 
     protected function beforeDestroy(Request $request, Model $post)

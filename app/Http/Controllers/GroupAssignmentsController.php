@@ -19,7 +19,7 @@ class GroupAssignmentsController extends RelationController
 
     protected $request = AssignmentRequest::class;
 
-    public const EXCLUDE_METHODS = ['update', 'restore', 'associate', 'dissociate'];
+    public const EXCLUDE_METHODS = ['store', 'update', 'restore', 'associate', 'dissociate'];
 
     public function alwaysIncludes(): array
     {

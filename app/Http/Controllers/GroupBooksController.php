@@ -36,7 +36,7 @@ class GroupBooksController extends RelationController
         return $query->where('year', $request->query('year', 1));
     }
 
-    public const EXCLUDE_METHODS = ['restore', 'associate', 'dissociate'];
+    public const EXCLUDE_METHODS = ['store', 'update', 'restore', 'associate', 'dissociate'];
 
     protected function performFill(
         Request $request,

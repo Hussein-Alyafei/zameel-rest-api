@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\AssignmentPublished;
 use App\Http\Requests\AssignmentRequest;
 use App\Models\Assignment;
 use App\Policies\AssignmentPolicy;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -62,6 +64,11 @@ class AssignmentController extends Controller
         $query->where('deleted_at', '>', $time)->latest()->take(12);
 
         return response()->json(['data' => $query->get()]);
+    }
+
+    protected function afterStore(Request $request, Model $assignment)
+    {
+        AssignmentPublished::dispatch($assignment);
     }
 
     public function filterableBy(): array
