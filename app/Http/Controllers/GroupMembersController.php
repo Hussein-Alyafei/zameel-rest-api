@@ -17,7 +17,7 @@ class GroupMembersController extends Controller
 
     public function attach(Request $request, Group $group, User $user)
     {
-        Gate::allowIf(Gate::forUser(Auth::user())->any(['admin', 'manager', 'representer']));
+        // Gate::allowIf(Gate::forUser(Auth::user())->any(['admin', 'manager', 'representer']));
         $data = $request->validate(['is_representer' => 'sometimes|boolean']);
 
         $group->members()->attach($user->id, $data);

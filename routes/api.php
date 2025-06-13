@@ -25,6 +25,8 @@ use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\SummaryController;
 use App\Http\Controllers\UpdatePasswordController;
 use App\Http\Controllers\UserController;
+use App\Models\Major;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
@@ -60,6 +62,25 @@ Route::middleware('auth:sanctum')->group(function () {
         Orion::resource('colleges', CollegeController::class)->withSoftDeletes()->withoutBatch();
         Orion::hasManyResource('colleges', 'majors', CollegeMajorsController::class)->except(CollegeMajorsController::EXCLUDE_METHODS)->withoutBatch();
 
+        Route::get('majors/groups', function () {
+            $eduYear = now()->greaterThan(now()->month(6)->day(1)) ? now()->year : now()->year - 1;
+
+            $majors = Major::with('groups')->get();
+
+            $majors->each(function ($major) use ($eduYear) {
+                $major->setRelation(
+                    'groups',
+                    $major->groups
+                        ->sortByDesc('join_year')
+                        ->filter(function ($group) use ($major, $eduYear) {
+                            return $group->join_year >= $eduYear - $major->years;
+                        })->values()
+                );
+            });
+
+            return response()->json(['data' => $majors]);
+        });
+        
         Orion::resource('majors', MajorController::class)->withSoftDeletes()->withoutBatch();
 
         Orion::resource('subjects', SubjectController::class)->withSoftDeletes()->withoutBatch();
