@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\AI\ZameelAssistant;
 use App\Http\Requests\AssistantChatRequest;
 use App\Jobs\SendMessageToAI;
 use App\Models\AssistantChat;

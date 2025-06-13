@@ -5,12 +5,9 @@ namespace App\Jobs;
 use App\AI\ZameelAssistant;
 use App\Events\AssistantResponded;
 use App\Models\AssistantChat;
-use App\Models\Book;
 use App\Models\User;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 use OpenAI\Laravel\Facades\OpenAI;
 
 class SendMessageToAI implements ShouldQueue
@@ -28,13 +25,13 @@ class SendMessageToAI implements ShouldQueue
     public function handle(): void
     {
         $text = $this->message['message'];
-        
+
         $messageToSend = [];
-            if (is_null($this->chat->messages)) {
-                $systemMessage = (new ZameelAssistant())->getSystemPrompt($this->user);
-                $messageToSend = array_merge($messageToSend, [['role' => 'system', 'content' => $systemMessage]]);
-            }
-        
+        if (is_null($this->chat->messages)) {
+            $systemMessage = (new ZameelAssistant)->getSystemPrompt($this->user);
+            $messageToSend = array_merge($messageToSend, [['role' => 'system', 'content' => $systemMessage]]);
+        }
+
         $messageToSend = array_merge($messageToSend, [['role' => 'user', 'content' => $text]]);
         $messages = array_merge(($this->chat->messages ?? []), $messageToSend);
 

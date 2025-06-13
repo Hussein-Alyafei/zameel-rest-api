@@ -6,11 +6,8 @@ use App\Models\Assignment;
 use App\Models\Book;
 use App\Models\Group;
 use App\Models\Post;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
-
-use function Pest\Laravel\json;
 
 class ZameelAssistant
 {
@@ -22,13 +19,14 @@ class ZameelAssistant
         //
     }
 
-    public function getSystemPrompt($user) {
+    public function getSystemPrompt($user)
+    {
         $name = $user['name'];
 
         $major = Group::find($user->groups()->get()[0]->id)->major()->get()[0]->name;
 
         $assignments = Assignment::whereIn('group_id', $user->groups()->get()->pluck('id')->toArray())->get()->toJson(JSON_PRETTY_PRINT);
-        
+
         $posts = null;
         if (Gate::forUser($user)->check('admin')) {
             $posts = Post::admin();
@@ -40,7 +38,7 @@ class ZameelAssistant
         $posts = $posts->get()->toJson(JSON_PRETTY_PRINT);
 
         $books = Book::whereIn('group_id', $user->groups()->get()->pluck('id')->toArray())->get();
-        $books->each(function($book) {
+        $books->each(function ($book) {
             $book['content'] = PDFToText(Storage::url($book['path']));
             unset($book['path']);
         });
