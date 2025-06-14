@@ -23,7 +23,7 @@ class ZameelAssistant
     {
         $name = $user['name'];
 
-        $major = Group::find($user->groups()->get()[0]->id)->major()->get()[0]->name;
+        $major = $user->groups()->exists() ? Group::find($user->groups()->get()[0]->id)->major()->get()[0]->name : 'no major';
 
         $assignments = Assignment::whereIn('group_id', $user->groups()->get()->pluck('id')->toArray())->get()->toJson(JSON_PRETTY_PRINT);
 
@@ -31,9 +31,9 @@ class ZameelAssistant
         if (Gate::forUser($user)->check('admin')) {
             $posts = Post::admin();
         } elseif (Gate::forUser($user)->any(['manager', 'academic'])) {
-            $posts = Post::academic();
+            $posts = Post::academic($user);
         } else {
-            $posts = Post::student();
+            $posts = Post::student($user);
         }
         $posts = $posts->get()->toJson(JSON_PRETTY_PRINT);
 

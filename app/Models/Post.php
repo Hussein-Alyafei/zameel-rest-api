@@ -39,8 +39,8 @@ class Post extends Model
 
     public function scopeStudent($query, $user = null)
     {
-        $user ??= Auth::user()->groups();
-        $groups = $user->groups();
+        $user ??= Auth::user();
+        $groups = $user->groups()->get();
         $groupsIDs = $groups->pluck('id')->toArray();
         $majors = $groups->pluck('major_id')->toArray();
         $colleges = Major::whereIn('id', $majors)->pluck('college_id')->toArray();
@@ -59,7 +59,7 @@ class Post extends Model
 
     public function scopeAcademic($query, $user)
     {
-        $user ??= Auth::user()->groups();
+        $user ??= Auth::user();
         $groups = $user->teachingGroups()->get();
         $majors = $groups->pluck('major_id')->toArray();
         $colleges = Major::whereIn('id', $majors)->pluck('college_id')->toArray();
