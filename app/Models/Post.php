@@ -37,9 +37,10 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function scopeStudent($query)
+    public function scopeStudent($query, $user = null)
     {
-        $groups = Auth::user()->groups();
+        $user ??= Auth::user()->groups();
+        $groups = $user->groups();
         $groupsIDs = $groups->pluck('id')->toArray();
         $majors = $groups->pluck('major_id')->toArray();
         $colleges = Major::whereIn('id', $majors)->pluck('college_id')->toArray();
@@ -56,9 +57,10 @@ class Post extends Model
         })->orWhereNull('taggable_type');
     }
 
-    public function scopeAcademic($query)
+    public function scopeAcademic($query, $user)
     {
-        $groups = Auth::user()->teachingGroups()->get();
+        $user ??= Auth::user()->groups();
+        $groups = $user->teachingGroups()->get();
         $majors = $groups->pluck('major_id')->toArray();
         $colleges = Major::whereIn('id', $majors)->pluck('college_id')->toArray();
 
