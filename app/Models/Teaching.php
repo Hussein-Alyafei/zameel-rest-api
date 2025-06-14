@@ -11,6 +11,8 @@ class Teaching extends Pivot
 
     protected $table = 'group_subject_user';
 
+    public $timestamps = false;
+
     protected $fillable = [
         'group_id',
         'user_id',
