@@ -20,10 +20,12 @@ class PostRequest extends Request
         return [
             'subject_id' => 'nullable|integer|numeric|exists:subjects,id',
             'taggable_type' => [
+                'nullable',
                 'string',
                 Rule::in($this->models),
             ],
             'taggable_id' => [
+                'nullable',
                 'required_with:taggable_type',
                 'integer',
                 'numeric',
