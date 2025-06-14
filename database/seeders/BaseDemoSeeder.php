@@ -65,33 +65,33 @@ class BaseDemoSeeder extends Seeder
     protected $academicsContents = [
         'تذكير: تسليم مشروع المستشفى قبل نهاية الشهر.',
         'يرجى مراجعة مخطط الشبكة المحلية قبل الدرس القادم.',
-        'سيتم إعادة اختبار للغائبين تاريخ 6/26'
+        'سيتم إعادة اختبار للغائبين تاريخ 6/26',
     ];
 
     protected $academicsContentsWithFile = [
         'يرجى من جميع الطلاب مراجعة درجات المحصلة قبل الاعتماد',
         'تم رفع الفصل الأول بعنوان مقدمة عن إدارة الشبكات',
-        'الملف المرفق عبارة عن المحاضرة القادمة'
+        'الملف المرفق عبارة عن المحاضرة القادمة',
     ];
 
     protected $files = [
         [
             'name' => 'محصلة قواعد البيانات',
             'type' => 'file',
-            'url'  => 'posts/files/FwbpMdHK5LqEprquIjxsTXhOZ0E2M2lYO7h4KaYv.pdf',
-            'ext'  => 'pdf',
+            'url' => 'posts/files/FwbpMdHK5LqEprquIjxsTXhOZ0E2M2lYO7h4KaYv.pdf',
+            'ext' => 'pdf',
         ],
         [
             'name' => 'مقدمة عن إدارة الشبكات',
             'type' => 'file',
-            'url'  => 'posts/files/GCJN8bVVRk6YSScAtZ6u5gl53PcITsX1gAtMJzLe.pdf',
-            'ext'  => 'pdf',
+            'url' => 'posts/files/GCJN8bVVRk6YSScAtZ6u5gl53PcITsX1gAtMJzLe.pdf',
+            'ext' => 'pdf',
         ],
         [
             'name' => 'المحاضرة الثانية من البرمجة كائنية التوجه',
             'type' => 'file',
-            'url'  => 'posts/files/DabAAqzAZGk2eUh8OecSOPLmWAkiucjgPG4czT24.pdf',
-            'ext'  => 'pdf',
+            'url' => 'posts/files/DabAAqzAZGk2eUh8OecSOPLmWAkiucjgPG4czT24.pdf',
+            'ext' => 'pdf',
         ],
     ];
 

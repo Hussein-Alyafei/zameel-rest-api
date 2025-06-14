@@ -49,7 +49,7 @@ class DemoSeeder extends BaseDemoSeeder
         foreach ($this->academicNames as $academicName => $arabicName) {
             User::create([
                 'name' => $arabicName,
-                'email' => $academicName . '@example.com',
+                'email' => $academicName.'@example.com',
                 'password' => Hash::make('password'),
                 'role_id' => Role::ACADEMIC,
                 'email_verified_at' => now(),
@@ -88,7 +88,6 @@ class DemoSeeder extends BaseDemoSeeder
             'subject_id' => 4,
         ]);
 
-
         $academics = User::where('role_id', Role::ACADEMIC)->get();
         $subjects = Subject::take(3)->get();
 
@@ -102,7 +101,6 @@ class DemoSeeder extends BaseDemoSeeder
             ]);
         }
 
-
         foreach ($this->assignments as $item) {
             Assignment::create([
                 'title' => $item['title'],
@@ -112,7 +110,6 @@ class DemoSeeder extends BaseDemoSeeder
                 'group_id' => 1,
             ]);
         }
-
 
         foreach ($this->books as $item) {
             Book::create([
@@ -125,7 +122,6 @@ class DemoSeeder extends BaseDemoSeeder
                 'semester' => 1,
             ]);
         }
-
 
         foreach ($academics as $index => $academic) {
             $subjectID = $academic->teachingSubjects->first()->id;
@@ -162,7 +158,7 @@ class DemoSeeder extends BaseDemoSeeder
         for ($i = 0; $i < 3; $i++) {
             Post::create([
                 'user_id' => $represnter->id,
-                'subject_id' => rand(1,4),
+                'subject_id' => rand(1, 4),
                 'taggable_type' => Group::class,
                 'taggable_id' => 1,
                 'content' => $this->representerContents[$i],
