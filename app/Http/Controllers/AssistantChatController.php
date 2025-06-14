@@ -14,7 +14,7 @@ class AssistantChatController extends Controller
     {
         $chat = AssistantChat::create();
 
-        return response()->json(['date' => ['id' => $chat->id]]);
+        return response()->json(['data' => ['id' => $chat->id]]);
     }
 
     public function update(AssistantChatRequest $request, AssistantChat $chat)
