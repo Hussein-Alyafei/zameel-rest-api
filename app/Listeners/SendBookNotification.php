@@ -2,9 +2,11 @@
 
 namespace App\Listeners;
 
-use App\Events\BooKPublished;
+use App\Events\BookPublished;
+use App\Models\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 
 class SendBookNotification implements ShouldQueue
 {
@@ -19,8 +21,14 @@ class SendBookNotification implements ShouldQueue
     /**
      * Handle the event.
      */
-    public function handle(BooKPublished $event): void
+    public function handle(BookPublished $event): void
     {
+        Notification::create([
+            'title' => 'هناك كتاب جديد',
+            'content' => Str::limit($event->book->name, 30),
+            'interests' => ['debug-all'],
+        ]);
+
         if (config('notifications.default') === 'pusher_beams') {
             Http::withHeaders([
                 'Content-Type' => 'application/json',

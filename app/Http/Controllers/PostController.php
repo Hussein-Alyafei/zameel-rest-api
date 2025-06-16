@@ -117,6 +117,8 @@ class PostController extends Controller
     protected function afterSave(Request $request, $post): void
     {
         if (is_null($request->attachment)) {
+            PostPublished::dispatch($post);
+
             return;
         }
 

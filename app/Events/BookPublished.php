@@ -15,7 +15,7 @@ class BookPublished
     /**
      * Create a new event instance.
      */
-    public function __construct(private Book $book)
+    public function __construct(public Book $book)
     {
         //
     }

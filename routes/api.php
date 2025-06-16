@@ -26,6 +26,8 @@ use App\Http\Controllers\SummaryController;
 use App\Http\Controllers\UpdatePasswordController;
 use App\Http\Controllers\UserController;
 use App\Models\Major;
+use App\Models\Notification;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
@@ -40,6 +42,14 @@ Broadcast::routes(['middleware' => ['auth:sanctum']]);
 Route::middleware('auth:sanctum')->group(function () {
 
     Route::middleware('verified')->group(function () {
+
+        Route::get('/notifications', function (Request $request) {
+            $request->validate([
+                'interest' => 'required|string',
+            ]);
+
+            return response()->json(['data' => Notification::whereJsonContains('interests', $request->interest)->get()]);
+        });
 
         Route::post('/users/{user}/roles/{role}', PromotionController::class);
 

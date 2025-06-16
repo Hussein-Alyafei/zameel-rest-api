@@ -15,7 +15,7 @@ class AssignmentPublished
     /**
      * Create a new event instance.
      */
-    public function __construct(private Assignment $assignment)
+    public function __construct(public Assignment $assignment)
     {
         //
     }
