@@ -21,17 +21,19 @@ class SendAssignmentNotification implements ShouldQueue
      */
     public function handle(AssignmentPublished $event): void
     {
-        Http::withHeaders([
-            'Content-Type' => 'application/json',
-            'Authorization' => 'Bearer '.config('brodcasting.pusher.beams.key'),
-        ])->post(config('brodcasting.pusher.beams.host'), [
-            'interests' => ['debug-all'],
-            'fcm' => [
-                'notification' => [
-                    'title' => 'هناك تكليف جديد!!!',
-                    'body' => 'انقر للاطلاع على أخر التحديثات',
+        if (config('notifications.default') === 'pusher_beams') {
+            Http::withHeaders([
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer '.config('notifications.connections.pusher_beams.key'),
+            ])->post(config('notifications.connections.pusher_beams.host'), [
+                'interests' => ['debug-all'],
+                'fcm' => [
+                    'notification' => [
+                        'title' => 'هناك تكليف جديد!!!',
+                        'body' => 'انقر للاطلاع على أخر التحديثات',
+                    ],
                 ],
-            ],
-        ]);
+            ]);
+        }
     }
 }

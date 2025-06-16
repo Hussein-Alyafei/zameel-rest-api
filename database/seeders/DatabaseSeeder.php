@@ -17,8 +17,12 @@ class DatabaseSeeder extends BaseSeeder
 
         Major::insert(CSV('majors'));
 
-        // if (DB::connection()->getName() !== 'testing' && app()->environment('local')) {
-        $this->call(DemoSeeder::class);
-        // }
+        if (DB::connection()->getName() !== 'testing') {
+            $this->call(FakeDataSeeder::class);
+        }
+
+        if (app()->environment('production') && app()->environment('local')) {
+            $this->call(DemoSeeder::class);
+        }
     }
 }

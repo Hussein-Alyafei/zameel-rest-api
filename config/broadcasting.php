@@ -62,11 +62,7 @@ return [
             'client_options' => [
                 // Guzzle client options: https://docs.guzzlephp.org/en/stable/request-options.html
             ],
-            'beams' => [
-                'instance_id' => env('PUSHER_BEAMS_INSTANCE_ID'),
-                'key' => env('PUSHER_BEAMS_KEY'),
-                'host' => 'https://'.env('PUSHER_BEAMS_INSTANCE_ID').'.pushnotifications.pusher.com/publish_api/v1/instances/'.env('PUSHER_BEAMS_INSTANCE_ID').'/publishes',
-            ],
+
         ],
 
         'ably' => [
