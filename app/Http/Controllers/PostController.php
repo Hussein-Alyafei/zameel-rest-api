@@ -41,9 +41,9 @@ class PostController extends Controller
         if (Gate::forUser($user)->check('admin')) {
             $query->admin();
         } elseif (Gate::forUser($user)->any(['manager', 'academic'])) {
-            $query->academic();
+            $query->academic($user);
         } else {
-            $query->student();
+            $query->student($user);
         }
 
         $pass = Validator::make(
@@ -73,9 +73,9 @@ class PostController extends Controller
         if (Gate::forUser($user)->check('admin')) {
             $query->admin();
         } elseif (Gate::forUser($user)->any(['manager', 'academic'])) {
-            $query->academic();
+            $query->academic($user);
         } else {
-            $query->student();
+            $query->student($user);
         }
 
         $pass = Validator::make(
