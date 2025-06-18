@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
@@ -27,6 +28,7 @@ class Handler
         SendEmailException::class => 'handleBadGatewayException',
         AcceptTypeException::class => 'handleBadRequestException',
         HttpException::class => 'handleHttpException',
+        ConflictHttpException::class => 'handleConflictException',
     ];
 
     public static function handleGenericException(Throwable $exception, Request $request, $uuid)
@@ -122,6 +124,17 @@ class Handler
                 'title' => $exception->getMessage(),
             ],
         ], 400);
+    }
+
+    public static function handleConflictException(Throwable $exception, Request $request, $uuid)
+    {
+        return response()->json([
+            'error' => [
+                'id' => $uuid,
+                'status' => 409,
+                'title' => $exception->getMessage(),
+            ],
+        ], 409);
     }
 
     public static function handleHttpException(Throwable $exception, Request $request, $uuid)

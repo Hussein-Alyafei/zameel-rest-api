@@ -17,16 +17,18 @@ class DeliveryRequest extends Request
         return [
             'type' => ['required', Rule::in($this->deliverytypes)],
             'content' => $this->getContentRules($this->input('type')),
-            'assignment_id' => 'required|integer|exists:assignments,id',
+
         ];
     }
 
     private function getContentRules($type): array
     {
-        return match ($type) {
-            'url' => ['required', 'url'],
-            'text' => ['required', 'string'],
-            'file' => ['required', File::types($this->fileTypes)->max(50 * 1024)],
-        };
+        if ($type === 'file') {
+            return ['required', File::types($this->fileTypes)->max(50 * 1024)];
+        } elseif ($type === 'url') {
+            return ['required', 'url'];
+        } else {
+            return ['required', 'string'];
+        }
     }
 }
