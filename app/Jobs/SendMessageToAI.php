@@ -27,29 +27,41 @@ class SendMessageToAI implements ShouldQueue
     {
         $text = $this->message['message'];
 
-        $messageToSend = [];
-        if (is_null($this->chat->messages)) {
+        $threadId = $this->chat->thread_id;
+        $assistantId = config('openai.assistant_key');
+
+        if (is_null($threadId)) {
             $systemMessage = (new ZameelAssistant)->getSystemPrompt($this->user, $this->chat->books ?? []);
-            $messageToSend = array_merge($messageToSend, [['role' => 'system', 'content' => $systemMessage]]);
+            $thread = OpenAI::threads()->create([
+                'messages' => [['role' => 'user', 'content' => $systemMessage]],
+            ]);
+            $threadId = $thread->id;
         }
 
-        $messageToSend = array_merge($messageToSend, [['role' => 'user', 'content' => $text]]);
-        $messages = array_merge(($this->chat->messages ?? []), $messageToSend);
-
-        $result = OpenAI::chat()->create([
-            'model' => config('openai.chat_model'),
-            'messages' => $messages,
+        OpenAI::threads()->messages()->create($threadId, [
+            'role' => 'user',
+            'content' => $text,
         ]);
 
-        $messages = array_merge($messages, [['role' => 'assistant', 'content' => $result->choices[0]->message->content]]);
-        $this->chat->messages = $messages;
-        $this->chat->save();
+        $run = OpenAI::threads()->runs()->create($threadId, [
+            'assistant_id' => $assistantId,
+        ]);
 
-        $chunks = Str::of($result->choices[0]->message->content)->matchAll('/.{1,1024}/us')->toArray();
+        do {
+            sleep(0.3);
+            $runStatus = OpenAI::threads()->runs()->retrieve($threadId, $run->id);
+        } while ($runStatus->status !== 'completed');
+
+        $messages = OpenAI::threads()->messages()->list($threadId);
+
+        $lastMessage = collect($messages->data)->firstWhere('role', 'assistant');
+
+        $response = $lastMessage?->content[0]?->text?->value;
+
+        $chunks = Str::of($response)->matchAll('/.{1,1024}/us')->toArray();
         $uuid = Str::uuid()->toString();
         for ($i = 0; $i < count($chunks); $i++) {
             AssistantResponded::dispatch($this->chat, $uuid, $i, $chunks[$i]);
-
         }
     }
 }
