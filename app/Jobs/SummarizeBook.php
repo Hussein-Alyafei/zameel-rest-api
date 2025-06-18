@@ -6,7 +6,6 @@ use App\Models\Book;
 use App\Models\Summary;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
-use Illuminate\Support\Facades\Storage;
 use OpenAI\Laravel\Facades\OpenAI;
 
 class SummarizeBook implements ShouldQueue
@@ -23,7 +22,8 @@ class SummarizeBook implements ShouldQueue
      */
     public function handle(): void
     {
-        $text = PDFToText(Storage::url($this->book->path));
+        $this->book->fresh();
+        $text = $this->book->content;
         $prompt = 'قم بتلخيص النص التالي بشكل شديد ومباشر باستخدام الفقرات القصيرة (لا تتجاوز سطرين لكل فقرة) والنقاط (لا تتجاوز 7 كلمات لكل نقطة)، مع إدراج جداول أو أمثلة توضيحية فقط إذا احتاج النص للشرح أو التوضيح. استخدم اللغة '.$this->language.' وحافظ على المعنى الكامل والدقة قدر الإمكان، ورتب المعلومات بطريقة منطقية ومنظمة';
         $message = $prompt."\n\n".$text;
         $systemMessage = 'أنت تطبيق جامعي لمساعدة الطلاب في الدراس و تقوم بعمل تلخيص للمواد الدراسية';

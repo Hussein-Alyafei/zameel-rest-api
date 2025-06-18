@@ -7,7 +7,6 @@ use App\Models\Book;
 use App\Models\Group;
 use App\Models\Post;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Storage;
 
 class ZameelAssistant
 {
@@ -40,7 +39,6 @@ class ZameelAssistant
 
         $books = Book::whereIn('id', $booksID)->get();
         $books->each(function ($book) {
-            $book['content'] = PDFToText(Storage::url($book['path']));
             unset($book['path']);
         });
         $books = $books->toJson(JSON_PRETTY_PRINT);

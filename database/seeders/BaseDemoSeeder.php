@@ -7,9 +7,9 @@ use Illuminate\Database\Seeder;
 class BaseDemoSeeder extends Seeder
 {
     protected $academicNames = [
-        'AhmedBelharth' => 'د. أحمد بلحارث',
-        'Lutfi' => 'د. لطفي الخنبري',
-        'AliBaleed' => 'د. علي بلعيد',
+        'ahmedbelharth' => 'د. أحمد بلحارث',
+        'lutfi' => 'د. لطفي الخنبري',
+        'alibaleed' => 'د. علي بلعيد',
     ];
 
     protected $assignments = [

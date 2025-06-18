@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\BookPublished;
 use App\Http\Requests\BookRequest;
+use App\Jobs\ExtractBookContent;
 use App\Jobs\MakeQuiz;
 use App\Jobs\SummarizeBook;
 use App\Models\Book;
@@ -14,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -94,8 +96,11 @@ class BookController extends Controller
         $languageAR = ($request->is_arabic) ? 'العربية' : 'الإنجليزية';
         $languageEN = ($request->is_arabic) ? 'arabic' : 'english';
 
-        SummarizeBook::dispatch($book, $languageAR);
-        MakeQuiz::dispatch($book, $languageEN);
+        Bus::chain([
+            new ExtractBookContent($book),
+            new SummarizeBook($book, $languageAR),
+            new MakeQuiz($book, $languageEN),
+        ])->dispatch();
 
         BookPublished::dispatch($book);
     }

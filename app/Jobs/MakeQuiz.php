@@ -6,7 +6,6 @@ use App\Models\Book;
 use App\Models\Quiz;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
-use Illuminate\Support\Facades\Storage;
 use OpenAI\Laravel\Facades\OpenAI;
 
 class MakeQuiz implements ShouldQueue
@@ -23,7 +22,8 @@ class MakeQuiz implements ShouldQueue
      */
     public function handle(): void
     {
-        $text = PDFToText(Storage::url($this->book->path));
+        $this->book->fresh();
+        $text = $this->book->content;
         $prompt = <<< prompt
             From the text below generate a quiz using $this->language language in JSON format containing:
 
