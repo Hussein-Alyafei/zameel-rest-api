@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\BookRequest;
 use App\Models\Group;
+use App\Models\Role;
 use App\Policies\BookPolicy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Orion\Concerns\DisablePagination;
 use Orion\Http\Controllers\RelationController;
@@ -32,6 +34,10 @@ class GroupBooksController extends RelationController
             ['year' => $request->query('year', 1)],
             ['year' => 'sometimes|integer|numeric']
         )->validate();
+
+        if (Auth::user()->role_id === Role::ACADEMIC || Auth::user()->role_id === Role::MANAGER) {
+            $query->whereIn('subject_id', Auth::user()->teachingSubjects()->get()->pluck('id')->toArray());
+        }
 
         return $query->where('year', $request->query('year', 1));
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\AssignmentPublished;
 use App\Http\Requests\AssignmentRequest;
 use App\Models\Assignment;
+use App\Models\Role;
 use App\Policies\AssignmentPolicy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -30,7 +31,8 @@ class AssignmentController extends Controller
     {
         $query = parent::buildIndexFetchQuery($request, $requestedRelations);
 
-        $query->whereIn('group_id', Auth::user()->groups()->get()->pluck('id')->toArray());
+        $groups = (Auth::user()->role_id === Role::ACADEMIC || Auth::user()->role_id === Role::MANAGER) ? Auth::user()->teachingGroups() : Auth::user()->groups();
+        $query->whereIn('group_id', $groups->get()->pluck('id')->toArray());
 
         $pass = Validator::make(
             [
@@ -45,6 +47,11 @@ class AssignmentController extends Controller
 
         $operator = $request->query('before', 'false') === 'true' ? '<' : '>';
         $time = $pass ? $request->query('cursor', Carbon::now()) : Carbon::now();
+
+        if (Auth::user()->role_id === Role::ACADEMIC || Auth::user()->role_id === Role::MANAGER) {
+            $query->whereIn('subject_id', Auth::user()->teachingSubjects()->get()->pluck('id')->toArray());
+        }
+
         $query->where('created_at', $operator, $time)->latest()->take(12);
 
         return $query;

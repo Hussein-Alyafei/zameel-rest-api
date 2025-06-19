@@ -27,6 +27,7 @@ use App\Http\Controllers\UpdatePasswordController;
 use App\Http\Controllers\UserController;
 use App\Models\Major;
 use App\Models\Notification;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Broadcast;
@@ -62,6 +63,8 @@ Route::middleware('auth:sanctum')->group(function () {
         });
 
         Route::get('/users/me/groups', function () {
+            $query = (Auth::user()->role_id === Role::ACADEMIC || Auth::user()->role_id === Role::MANAGER) ? Auth::user()->teachingGroups()->get() : Auth::user()->groups()->get();
+
             return response()->json(Auth::user()->groups()->get());
         });
 
