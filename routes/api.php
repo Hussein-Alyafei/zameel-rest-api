@@ -65,7 +65,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/users/me/groups', function () {
             $query = (Auth::user()->role_id === Role::ACADEMIC || Auth::user()->role_id === Role::MANAGER) ? Auth::user()->teachingGroups()->get() : Auth::user()->groups()->get();
 
-            return response()->json(Auth::user()->groups()->get());
+            return response()->json($query);
         });
 
         Route::get('/posts/deleted', [PostController::class, 'deleted']);
