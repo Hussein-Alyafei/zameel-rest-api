@@ -8,7 +8,6 @@ use App\Models\AssistantChat;
 use App\Models\User;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
-use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Str;
 use OpenAI\Laravel\Facades\OpenAI;
 
@@ -61,10 +60,8 @@ class SendMessageToAI implements ShouldQueue
 
         $chunks = Str::of($response)->matchAll('/.{1,1024}/us')->toArray();
         $uuid = Str::uuid()->toString();
-        $packets = [];
         for ($i = 0; $i < count($chunks); $i++) {
-            $packets[] = new AssistantResponded($this->chat, $uuid, $i, $chunks[$i]);
+            AssistantResponded::dispatch($this->chat, $uuid, $i, $chunks[$i]);
         }
-        Bus::chain($packets);
     }
 }
